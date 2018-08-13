@@ -6,7 +6,8 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
 
-- Do not use tags, use `4 spaces` per level instead
+- Do not use tabs, use spaces instead
+- Use `4` spaces per indent level
 - Use `1` space between keyword and opening bracket
 - Do not use space between function name and opening bracket
 - Opening curly bracket is always on the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
