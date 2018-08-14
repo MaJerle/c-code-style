@@ -426,6 +426,73 @@ switch (a) {
 }
 ```
 
+# Macros and preprocessor
+
+- Always use macros instead of literal constants, specially for numbers
+- All macros must be fully uppercase, with optional underscore `_` character, except if they are clearly marked as function which may be in the future replaced with regular function syntax
+```c
+/* OK */
+#define MY_MACRO(x)         ((x) * (x))
+
+/* Wrong */
+#define sqaure(x)           ((x) * (x))
+```
+
+- Always protect input parameters with parentheses
+```c
+/* OK */
+#define min(x, y)           ((x) < (y) ? (x) : (y))
+
+/* Wrong */
+#define min(x, y)           x < y ? x : y
+```
+
+- Always write macro documentation as regular function with additional `hideinitializer` doxygen keyword
+- Avoid using `#ifdef` or `#ifndef`. Use `defined()` or `!defined()` instead
+```c
+#ifdef XYZ
+/* do something */
+#endif /* XYZ */
+```
+
+- Always document `endif` statement
+```c
+/* OK */
+#if defined(XYZ)
+/* Do if XYZ defined */
+#else /* defined(XYZ) */
+/* Do if XYZ not defined */
+#endif /* !defined(XYZ) */
+
+/* Wrong */
+#if defined(XYZ)
+/* Do if XYZ defined */
+#else
+/* Do if XYZ not defined */
+#endif
+```
+
+- Do not indent sub statements inside `#if` statement
+```c
+/* OK */
+#if defined(XYZ)
+#if defined(ABC)
+/* do when ABC defined */
+#endif /* defined(ABC) */
+#else /* defined(XYZ) */
+/* Do when XYZ not defined */
+#endif /* !defined(XYZ) */
+
+/* Wrong */
+#if defined(XYZ)
+    #if defined(ABC)
+        /* do when ABC defined */
+    #endif /* defined(ABC) */
+#else /* defined(XYZ) */
+    /* Do when XYZ not defined */
+#endif /* !defined(XYZ) */
+```
+
 # Documentation
 
 Documented code allows doxygen to parse and general html/pdf/latex output, thus it is very important to do it properly.
@@ -468,6 +535,7 @@ typedef enum {
 } point_color_t;
 ```
 
+- Documentation for functions must be written in function implementation (source file usually)
 - Function must include `brief` and all parameters documentation
 - Every parameter must be noted if it is `in` or `out` for *input* and *output* respectively
 - Function must include `return` parameter if it returns something. This does not apply for `void` functions
@@ -529,4 +597,88 @@ const void *
 get_data(const void* in) {
     return in;
 }
+```
+
+- Documentation for macros must include `hideinitializer` doxygen command
+```c
+/**
+ * \brief           Get minimal value between `x` and `y`
+ * \param[in]       x: First value
+ * \param[in]       y: Second value
+ * \return          Minimal value between `x` and `y`
+ * \hideinitializer
+ */
+#define MIN(x, y)       ((x) < (y) ? (x) : (y))
+```
+
+# Template files
+
+Template files for header and source are included in repository.
+Please check below some notes on files
+
+- Leave single empty line at the end of file
+- Every file must include doxygen annotation for `file` and `brief` description followed by empty line
+```c
+/**
+ * \file            template.h
+ * \brief           Template include file
+ */
+                    /* Here is empty line */
+```
+
+- Every file (*header* or *source*) must include license (opening comment includes single asterix as this must be ignored by doxygen)
+- Use the same license as already used by project/library
+```c
+/**
+ * \file            template.h
+ * \brief           Template include file
+ */
+
+/*
+ * Copyright (c) 2018 FirstName LastName
+ *  
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software, 
+ * and to permit persons to whom the Software is furnished to do so, 
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+ * AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * This file is part of library_name.
+ *
+ * Author:          Author Name <optional_email@example.com>
+ */
+```
+
+- Header file must include guard `#ifndef`
+- Header file must include `C++` check
+```c
+/* License comes here */
+#ifndef __TEMPLATE_H
+#define __TEMPLATE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* File content here */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* __TEMPLATE_H */
 ```
