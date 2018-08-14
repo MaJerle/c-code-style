@@ -22,7 +22,7 @@ Here are listed most obvious and important general rules. Please check them care
 - Always include check for `C++` with `extern` keyword in header file
 - Every function must include *doxygen-enabled* comment, even if function is `static`
 - Use English names/text for functions, variables, comments
-- Never cast function returning `void *`, eg `uint8_t* ptr = (uint8_t *)func_returning_void_ptr();` as `void *` is safely promoted to any other pointer type
+- Never cast function returning `void *`, eg. `uint8_t* ptr = (uint8_t *)func_returning_void_ptr();` as `void *` is safely promoted to any other pointer type
 - Always respect code style already used in project or library
 
 # Comments
@@ -206,7 +206,7 @@ char *p, *n;
 - Structure or enumeration may contain `typedef` keyword
 - All structure members must be lowercase
 - All enumeration members must be uppercase
-- Declare every member in its own line, even if they share the same type, eg do not do `int a, b`
+- Declare every member in its own line, even if they share the same type, eg. do not do `int a, b`
 - Structure/enumeration must follow doxygen documentation syntax
 
 When structure is declared, it may use one of `3` different options:
@@ -427,3 +427,106 @@ switch (a) {
 ```
 
 # Documentation
+
+Documented code allows doxygen to parse and general html/pdf/latex output, thus it is very important to do it properly.
+
+- Use doxygen-enabled documentation style for `variables`, `functions` and `structures/enumerations`
+- Always use `\` for doxygen, do not use `@`
+- Always use `5x4` spaces (`5` tabs) offset from beginning of line for text
+```c
+/**
+ * \brief           Holds pointer to first entry in linked list
+ *                  Beginning of this text is 5 tabs (20 spaces) from beginning of line
+ */
+static type_t* list;
+```
+
+- Every structure/enumeration member must include documentation
+- Use `12x4 spaces` offset for beginning of comment
+```c
+/**
+ * \brief           This is point struct
+ * \note            This structure is used to calculate all point 
+ *                      related stuff
+ */
+typedef struct {
+    int x;                                      /*!< Point X coordinate */
+    int y;                                      /*!< Point Y coordinate */
+    int size;                                   /*!< Point size.
+                                                    Since comment is very big,
+                                                    you may go to next line */
+} point_t;
+
+/**
+ * \brief           Point color enumeration
+ */
+typedef enum {
+    COLOR_RED,                                  /*!< Red color. This comment has 12x4
+                                                    spaces offset from beginning of line */
+    COLOR_GREEN,                                /*!< Green color */
+    COLOR_BLUE,                                 /*!< Blue color */
+} point_color_t;
+```
+
+- Function must include `brief` and all parameters documentation
+- Every parameter must be noted if it is `in` or `out` for *input* and *output* respectively
+- Function must include `return` parameter if it returns something. This does not apply for `void` functions
+- Function can include other doxygen keywords, such as `note` or `warning`
+- Use colon `:` between parameter name and its description
+```c
+/**
+ * \brief           Sum `2` numbers
+ * \param[in]       a: First number
+ * \param[in]       b: Second number
+ * \return          Sum of input values
+ */
+int
+sum(int a, int b) {
+    return a + b;
+}
+
+/**
+ * \brief           Sum `2` numbers and write it to pointer
+ * \note            This function does not return value, it stores it to pointer instead
+ * \param[in]       a: First number
+ * \param[in]       b: Second number
+ * \param[out]      result: Output variable used to save result
+ */
+void
+void_sum(int a, int b, int* result) {
+    *result = a + b;
+}
+```
+
+- If function returns member of enumeration, use `ref` keyword to specify which one
+```c
+/**
+ * \brief           My enumeration
+ */
+typedef enum {
+    MY_ERR,                                     /*!< Error value */
+    MY_OK                                       /*!< OK value */
+} my_enum_t;
+
+/**
+ * \brief           Check some value
+ * \return          \ref MY_OK on success, member of \ref my_enum_t otherwise
+ */
+my_enum_t
+check_value(void) {
+    return MY_OK;
+}
+```
+
+- Use notation (\`NULL\`)for constants or numbers
+```c
+/**
+ * \brief           Get data from input array
+ * \param[in]       in: Input data
+ * \return          Pointer to output data on success, `NULL` otherwise
+ */
+const void *
+get_data(const void* in) {
+    return in;
+}
+```
