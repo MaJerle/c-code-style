@@ -2,7 +2,7 @@
 
 This document describes C code style used by Tilen MAJERLE in his projects and libraries.
 
-# General global rules
+# General rules
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
 
@@ -13,82 +13,192 @@ Here are listed most obvious and important general rules. Please check them care
 - Opening curly bracket is always on the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
 - Use single space before and after comparison and assignments operators
 - Use single space after every comma (`func_name(param1, param2)`)
-- Do not initialize `static` and `global` variables to `0`, let compiler do it for you
+- Do not initialize `static` and `global` variables to `0` (or `NULL`), let compiler do it for you
 - Declare all local variables of the same type in the same line
 - Except `char`, always use types declared in `stdint.h` library, eg. `uint8_t` for `unsigned 8-bit`, etc.
-- Do not use `stdbool.h` library in any case. Use `1` or `0` for `true`or `false` respectively
 - Always compare pointers against `NULL` value, eg. `if (ptr != NULL) { ... }` (or `ptr == NULL`), do not use `if (ptr) { ... }`
 - Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
 - Always use `/* comment */` for comments, even when *single-line* comment
 - Always include check for `C++` with `extern` keyword in header file
 - Every function must include *doxygen-enabled* comment, even if function is `static`
+- Use English names/text for functions, variables, comments
 - Never cast function returning `void *`, eg `uint8_t* ptr = (uint8_t *)func_returning_void_ptr();` as `void *` is safely promoted to any other pointer type
 - Always respect code style already used in project or library
 
-# Comments and documentation
+# Comments
+
+- Comments starting with `//` are not allowed. Always use `/* comment */`, even for single-line comment
+```c
+//This is comment (wrong)
+/* This is commenet (ok) */
+```
+
+- For multi-line comments use `space+asterix` for every line
+
+```c
+/*
+ * This is multi-line comments,
+ * written in 2 lines (ok)
+ */
+ 
+/**
+ * Wrong, use double-asterix only for doxygen documentation
+ */
+ 
+/*
+* Single line comment without space before asterix (wrong)
+*/
+
+/*
+ * Single line comment in multi-line configuration (wrong)
+ */
+
+/* Single line comment (ok) */
+```
+
+Use `12` indents (`12 * 4` spaces) offset when commenting. If statement is larger than `12` indents, make comment `4-spaces` aligned (examples below)
+
+```c
+void
+my_func(void) {
+    char a, b;
+                                                
+    a = call_func_returning_char_a(a);          /* This is comment with 12*4 spaces indent from beginning of line */
+    b = call_func_returning_char_a_but_func_name_is_very_long(a);   /* This is comment, aligned to 4-spaces indent */
+}
+```
 
 # Functions
 
 - Every function which may be access from outside module, must include function *prototype* (or *declaration*)
-- Function names must be lowercase, optionally separated with underscore character
-- When function returns pointer, asterix character must be left aligned without space (`char* my_func(int a);`)
-- Align all function prototypes for better readability
-- Function implementation must include return type and optional other keywords in separate line
-- When function returns pointer, asterix character must include space between type and character (`char *`)
-
+- Function names must be lowercase, optionally separated with underscore `_` character
 ```c
-/* Good declarations */
+/* OK */
+void my_func(void);
+void myfunc(void);
 
-int     sum(int a, int b);
-char*   get_char(void);
-
-/* Inside module */
-static int divide(int a, int b);
-
-/* Bad declarations */
-
-char *get_char(void);
-char * get_char();
-int sum(int a,int b); /* Space missing after comma */
-int sum (int a, int b); /* No space between function name and opening bracket */
+/* Wrong */
+void MYFunc(void);
+void myFunc();
 ```
-After function declaration, implement functions in module .c file
 
+- When function returns pointer, asterix character must be left aligned without space
 ```c
-/* Good implementations */
+/* OK */
+const char* my_func(void);
+my_struct_t* my_func(int a, int b);
 
+/* Wrong */
+const char *my_func(void);
+my_struct_t * my_func(void);
+```
+- Align all function prototypes (with the same/similar functionality) for better readability
+```c
+/* OK, function names aligned */
+void        set(int a);
+my_type_t   get(void);
+
+/* Wrong */
+void set(int a);
+const char* get(void);
+```
+
+- Function implementation must include return type and optional other keywords in separate line
+```c
+/* OK */
 int
-sum(int a, int b) {
-    return a + b;
+foo(void) {
+    return 0;
 }
 
-static int
-divide(int a, int b) {
-    return a + b;
+/* OK */
+static const char *
+get_string(void) {
+    return "Hello world!\r\n";
 }
 
-/* Asterix is followed after space */
-char *     
-get_str(void) {
-    return str;
+/* Wrong */
+int foo(void) {
+    return 0;
+}
+```
+
+- When function returns pointer, asterix character must include space between type and character (`char *`)
+```c
+/* OK */
+const char *
+foo(void) {
+    return "test";
 }
 
-/* Bad implementations */
-
-int sum(int a, int b) /* Return type must be in separate line */
-{   /* Curly opening bracket must be in the same line as keyword */
-    return a + b;
-}
-int
-sum(int a, int b) {
-int tmp;   /* Local variables must have indent */
-int tmp2;  /* Variables of the same type must be comma separated */
-    tmp = a + b;
-    return tmp;
+/* Wrong */
+const char*
+foo(void) {
+    return "test";
 }
 ```
 
 # Variables
+
+- Make variable name all lowercase with optional underscore `_` character
+```c
+/* OK */
+int a;
+int my_var;
+int myvar;
+
+/* Wrong */
+int A; 
+int myVar;
+int MYVar;
+```
+
+- Group local variables together by `type`
+```c
+void
+foo(void) {
+    int a, b;   /* OK */
+    char a;
+    char b;     /* Wrong, char type already exists */
+}
+```
+
+- Do not declare variable after first executable statement
+```c
+void
+foo(void) {
+    int a;
+    a = bar();
+    int b;      /* Wrong, there is already executable statement */
+}
+```
+
+- You may declare new variables inside next indent level
+```c
+int a, b;
+a = foo();
+if (a) {
+    int c, d;   /* OK, c and d are in if-statement scope */
+    c = foo();
+    int e;      /* Wrong, there was already executable statement inside block */
+}
+```
+
+- Declare pointer variables with asterix aligned to type
+```c
+/* OK */
+char* a;
+
+/* Wrong */
+char *a;
+char * a;
+```
+
+- When declaring multiple pointer variables, you may declare them with asterix alighed to variable name
+```
+/* OK */
+char *p, *n;
+```
 
 # Structures and enumerations
 
@@ -125,7 +235,6 @@ typedef struct struct_name {
 ```
 
 Examples of bad declarations and their suggested corrections
-
 ```c
 /* a and b must be separated to 2 lines */
 /* Name of structure with typedef must include _t suffix */
@@ -154,50 +263,167 @@ typedef enum {
 
 # Compound statements
 
-### General rules
-
 - Every compound statement must include opening and closing curly braces, even if there is only `1` statement
-- In case of `if` statement, `else` must be in the same line as closing bracket of first statement
-- In case of `do-while` statement, `while` part must be in the same line as closing bracket of `do` part
-- The same applies for `if-else` statement
-- Indentation is required for every opening bracket
-
-Every such statement *has to* include braces.
+- Every compound statement must include single indent, when nesting statements, include `1` indent for each nest
 
 ```c
+/* OK */
 if (c) {
     do_a();
 } else {
     do_b();
 }
-```
-Or in case of `if-else` statement
 
-```c
-if (c) {
+/* Wrong */
+if (c)
     do_a();
+else
+    do_b();
+    
+/* Wrong */
+if (c) do_a();
+else do_b();
+```
+
+- In case of `if` or `if-else-if` statement, `else` must be in the same line as closing bracket of first statement
+```c
+/* OK */
+if (a) {
+
 } else if (b) {
-    do_b();
+
 } else {
-    do_c();
+
+}
+
+/* Wrong */
+if (a) {
+
+} 
+else {
+
+}
+
+/* Wrong */
+if (a) {
+
+} 
+else
+{
+
 }
 ```
 
-Or with `if-if-else` statement
+- In case of `do-while` statement, `while` part must be in the same line as closing bracket of `do` part
+```c
+/* OK */
+do {
+    int a;
+    a = do_a();
+    do_b(a);
+} while (check());
 
+/* Wrong */
+do
+{
+/* ... */
+} while (check());
+
+/* Wrong */
+do {
+/* ... */
+}
+while (check());
+```
+
+- Indentation is required for every opening bracket
 ```c
 if (a) {
-    if (b) {
-        do_b();
-    } else {
+    do_a();
+} else {
+    do_b();
+    if (c) {
         do_c();
     }
 }
 ```
 
-Never do compound statement without braces, even in case of single statement. Example below shows bad practice.
-
+- Never do compound statement without braces, even in case of single statement. Example below shows bad practice.
 ```c
 if (a) do_b();
 else do_c();
 ```
+
+### Switch statement
+
+- Make single `indent` for every case statement
+```c
+/* OK, every case has single indent */
+switch (check()) {
+    case 0:
+        do_a();
+        break;
+    case 1:
+        do_b();
+        break;
+    default:
+        break;
+}
+
+/* Wrong, case indent missing */
+switch (check()) {
+case 0:
+    do_a();
+    break;
+case 1:
+    do_b();
+    break;
+default:
+    break;
+}
+
+/* Wrong */
+switch (check()) {
+    case 0:
+        do_a();
+    break;      /* Wrong, break must have indent as it is under case */
+    case 1:
+    do_b();     /* Wrong, indent under case is missing */
+    break;
+    default:
+        break;
+}
+```
+
+- Always include `default` statement
+```c
+/* Wrong, default is missing */
+switch (var) {
+    case 0: 
+        do_job(); 
+        break;
+}
+```
+
+- If local variables are required, use curly brackets and put `break` statement inside. Put curly bracket in the same line as `case` statement
+```c
+switch (a) {
+    /* OK */
+    case 0: {
+        int a, b;
+        char c;
+        a = 5;
+        /* ... */
+        break;
+    }
+    
+    /* Wrong */
+    case 1:
+    {
+        int a;
+        break;    
+    }
+}
+```
+
+# Documentation
