@@ -195,7 +195,7 @@ char * a;
 ```
 
 - When declaring multiple pointer variables, you may declare them with asterix alighed to variable name
-```
+```c
 /* OK */
 char *p, *n;
 ```
@@ -518,7 +518,7 @@ check_value(void) {
 }
 ```
 
-- Use notation (\`NULL\`)for constants or numbers
+- Use notation (\`NULL\` => `NULL`) for constants or numbers
 ```c
 /**
  * \brief           Get data from input array
