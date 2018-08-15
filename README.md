@@ -124,7 +124,7 @@ my_func(int size) {
 - Comments starting with `//` are not allowed. Always use `/* comment */`, even for single-line comment
 ```c
 //This is comment (wrong)
-/* This is commenet (ok) */
+/* This is comment (ok) */
 ```
 
 - For multi-line comments use `space+asterix` for every line
