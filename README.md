@@ -10,14 +10,108 @@ Here are listed most obvious and important general rules. Please check them care
 - Use `4` spaces per indent level
 - Use `1` space between keyword and opening bracket
 - Do not use space between function name and opening bracket
+```c
+int a = sum(4, 3);      /* OK */
+int a = sum (4, 3);     /* Wrong */
+```
+
 - Opening curly bracket is always on the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
+```c
+int a;
+for (a = 0; a < 5; i++) {           /* OK */
+}
+for (a = 0; a < 5; i++){            /* Wrong */
+}
+for (a = 0; a < 5; i++)             /* Wrong */
+{
+}
+```
+
 - Use single space before and after comparison and assignments operators
-- Use single space after every comma (`func_name(param1, param2)`)
+```c
+int a;
+a = 3 + 4;              /* OK */
+for (a = 0; a < 5; a++) /* OK */
+a=3+4;                  /* Wrong */
+a = 3+4;                /* Wrong */
+for (a=0;a<5;a++)       /* Wrong */
+```
+
+- Use single space after every comma
+```c
+func_name(5, 4);        /* OK */
+func_name(4,3);         /* Wrong */
+```
+
 - Do not initialize `static` and `global` variables to `0` (or `NULL`), let compiler do it for you
+```c
+static int a;           /* OK */
+static int b = 4;       /* OK */
+static int a = 0;       /* Wrong */
+
+void
+my_func(void) {
+    static int* ptr;    /* OK */
+    static char abc = 0;/* Wrong */
+}
+```
+
 - Declare all local variables of the same type in the same line
+```c
+void
+my_func(void) {
+    char a;             /* OK */
+    char a, b;          /* OK */
+    char b;             /* Wrong, variable with char type already exists */
+}
+```
+
 - Except `char`, always use types declared in `stdint.h` library, eg. `uint8_t` for `unsigned 8-bit`, etc.
 - Always compare pointers against `NULL` value, eg. `if (ptr != NULL) { ... }` (or `ptr == NULL`), do not use `if (ptr) { ... }`
 - Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
+- Always use `size_t` for length or size
+- Always use `const` for pointer if function should not modify memory pointed to by `pointer`
+- When function may accept pointer of any type, always use `void *`, do not use `uint8_t *` or similar
+    - Function must take care of proper casting
+```c
+/*
+ * To send data, function should not modify memory pointed to by `data` variable
+ * thus `const` keyword is important
+ *
+ * To send generic data (or to write them to file)
+ * any type may be passed for data,
+ * thus use `void *`
+ */
+ /* OK example */
+void
+send_data(const void* data, size_t len) { /* OK */
+    /* Do not cast `void *` or `const void *` */
+    const uint8_t d = data; /* Function handles proper type for internal usage */
+}
+
+void
+send_data(const void* data, int len) {    /* Wrong */
+}
+```
+
+- Never use *Variable Length Array* (VLA). Use dynamic memory allocation instead using standard C `malloc` and `free` functions or if library provides custom memory allocation, use its implementation
+```c
+#include "stdlib.h"
+void my_func(size_t size) {
+    int* arr;
+    arr = malloc(sizeof(*arr) * n); /* Allocate memory */
+    if (arr == NULL) {
+        /* FAIL, no memory */
+    }
+    
+    free(arr);  /* Free memory */
+}
+
+void
+my_func(int size) {
+    int arr[size];      /* Wrong */
+}
+```
 - Always use `/* comment */` for comments, even when *single-line* comment
 - Always include check for `C++` with `extern` keyword in header file
 - Every function must include *doxygen-enabled* comment, even if function is `static`
