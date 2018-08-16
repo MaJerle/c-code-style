@@ -92,7 +92,7 @@ a(void) {
 }
 ```
 
-- Except `char`, always use types declared in `stdint.h` library, eg. `uint8_t` for `unsigned 8-bit`, etc.
+- Except `char`, `float` or `double`, always use types declared in `stdint.h` library, eg. `uint8_t` for `unsigned 8-bit`, etc.
 - Do not use `stdbool.h` library. Use `1` or `0` for `true` or `false` respectively
 ```c
 /* OK */
