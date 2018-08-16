@@ -27,7 +27,7 @@ for (a = 0; a < 5; i++)             /* Wrong */
 }
 ```
 
-- Use single space before and after comparison and assignments operators
+- Use single space before and after comparison and assignment operators
 ```c
 int a;
 a = 3 + 4;              /* OK */
@@ -64,6 +64,16 @@ my_func(void) {
     char a, b;          /* OK */
     char b;             /* Wrong, variable with char type already exists */
 }
+```
+
+- Do not inizialize variables in `for` loop
+```c
+/* OK */
+int i;
+for (i = 0; i < 10; i++) ...
+
+/* Wrong */
+for (int i = 0; i < 10; i++)
 ```
 
 - Except `char`, always use types declared in `stdint.h` library, eg. `uint8_t` for `unsigned 8-bit`, etc.
