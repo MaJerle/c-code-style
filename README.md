@@ -76,6 +76,22 @@ for (i = 0; i < 10; i++) ...
 for (int i = 0; i < 10; i++)
 ```
 
+- Avoid variable assignment with function call in declaration, except for single variables
+```c
+void
+a(void) {
+    /* Avoid function calls when declaring variable */
+    int a, b = sum(1, 2);
+    
+    /* Use this */
+    int a, b;
+    b = sum(1, 2);
+
+    /* This is ok */
+    uint8_t a = 3, b = 4;
+}
+```
+
 - Except `char`, always use types declared in `stdint.h` library, eg. `uint8_t` for `unsigned 8-bit`, etc.
 - Always compare pointers against `NULL` value, eg. `if (ptr != NULL) { ... }` (or `ptr == NULL`), do not use `if (ptr) { ... }`
 - Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
