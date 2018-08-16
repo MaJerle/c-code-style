@@ -93,12 +93,36 @@ a(void) {
 ```
 
 - Except `char`, always use types declared in `stdint.h` library, eg. `uint8_t` for `unsigned 8-bit`, etc.
-- Always compare pointers against `NULL` value, eg. `if (ptr != NULL) { ... }` (or `ptr == NULL`), do not use `if (ptr) { ... }`
+- Do not use `stdbool.h` library. Use `1` or `0` for `true` or `false` respectively
+```c
+/* OK */
+uint8_t status;
+status = 0;
+
+/* Wrong */
+#include "stdbool.h"
+bool status = true;
+```
+
+- Always compare pointers against `NULL` value
+```c
+/* OK, compare against NULL */
+uint8_t* ptr;
+if (ptr == NULL || ptr != NULL) {
+
+}
+
+/* Wrong */
+if (ptr || !ptr) {
+
+}
+```
+
 - Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
 - Always use `size_t` for length or size
 - Always use `const` for pointer if function should not modify memory pointed to by `pointer`
-- When function may accept pointer of any type, always use `void *`, do not use `uint8_t *` or similar
-    - Function must take care of proper casting
+- When function may accept pointer of any type, always use `void *`, do not use `uint8_t *`
+    - Function must take care of proper casting inside
 ```c
 /*
  * To send data, function should not modify memory pointed to by `data` variable
@@ -120,8 +144,9 @@ send_data(const void* data, int len) {    /* Wrong */
 }
 ```
 
-- Never use *Variable Length Array* (VLA). Use dynamic memory allocation instead using standard C `malloc` and `free` functions or if library provides custom memory allocation, use its implementation
+- Never use *Variable Length Array* (VLA). Use dynamic memory allocation instead with standard C `malloc` and `free` functions or if library/project provides custom memory allocation, use its implementation
 ```c
+/* OK */
 #include "stdlib.h"
 void my_func(size_t size) {
     int* arr;
@@ -133,12 +158,13 @@ void my_func(size_t size) {
     free(arr);  /* Free memory */
 }
 
+/* Wrong */
 void
 my_func(int size) {
     int arr[size];      /* Wrong */
 }
 ```
-- Always use `/* comment */` for comments, even when *single-line* comment
+- Always use `/* comment */` for comments, even for *single-line* comment
 - Always include check for `C++` with `extern` keyword in header file
 - Every function must include *doxygen-enabled* comment, even if function is `static`
 - Use English names/text for functions, variables, comments
