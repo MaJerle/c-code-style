@@ -70,6 +70,7 @@ my_func(void) {
 ```c
 /* OK */
 int i;
+/* ... */
 for (i = 0; i < 10; i++) ...
 
 /* Wrong */
@@ -103,6 +104,7 @@ status = 0;
 #include "stdbool.h"
 bool status = true;
 ```
+- Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
 
 - Always compare pointers against `NULL` value
 ```c
@@ -118,11 +120,10 @@ if (ptr || !ptr) {
 }
 ```
 
-- Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
-- Always use `size_t` for length or size
+- Always use `size_t` for length or size variables
 - Always use `const` for pointer if function should not modify memory pointed to by `pointer`
 - When function may accept pointer of any type, always use `void *`, do not use `uint8_t *`
-    - Function must take care of proper casting inside
+    - Function must take care of proper casting in implementation
 ```c
 /*
  * To send data, function should not modify memory pointed to by `data` variable
@@ -136,7 +137,7 @@ if (ptr || !ptr) {
 void
 send_data(const void* data, size_t len) { /* OK */
     /* Do not cast `void *` or `const void *` */
-    const uint8_t d = data; /* Function handles proper type for internal usage */
+    const uint8_t* d = data;/* Function handles proper type for internal usage */
 }
 
 void
@@ -145,23 +146,25 @@ send_data(const void* data, int len) {    /* Wrong */
 ```
 
 - Never use *Variable Length Array* (VLA). Use dynamic memory allocation instead with standard C `malloc` and `free` functions or if library/project provides custom memory allocation, use its implementation
+- Always use brackets with `sizeof` operator.
 ```c
 /* OK */
 #include "stdlib.h"
 void my_func(size_t size) {
     int* arr;
-    arr = malloc(sizeof(*arr) * n); /* Allocate memory */
+    arr = malloc(sizeof(*arr) * n); /* OK, Allocate memory */
+    arr = malloc(sizeof *arr * n);  /* Wrong, brackets for sizeof operator are missing */
     if (arr == NULL) {
         /* FAIL, no memory */
     }
     
-    free(arr);  /* Free memory */
+    free(arr);  /* Free memory after usage */
 }
 
 /* Wrong */
 void
 my_func(int size) {
-    int arr[size];      /* Wrong */
+    int arr[size];      /* Wrong, do not use VLA */
 }
 ```
 - Always use `/* comment */` for comments, even for *single-line* comment
@@ -180,7 +183,6 @@ my_func(int size) {
 ```
 
 - For multi-line comments use `space+asterix` for every line
-
 ```c
 /*
  * This is multi-line comments,
@@ -202,8 +204,7 @@ my_func(int size) {
 /* Single line comment (ok) */
 ```
 
-Use `12` indents (`12 * 4` spaces) offset when commenting. If statement is larger than `12` indents, make comment `4-spaces` aligned (examples below)
-
+- Use `12` indents (`12 * 4` spaces) offset when commenting. If statement is larger than `12` indents, make comment `4-spaces` aligned (examples below)
 ```c
 void
 my_func(void) {
