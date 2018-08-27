@@ -410,9 +410,8 @@ typedef enum {
 
 # Compound statements
 
-- Every compound statement must include opening and closing curly braces, even if there is only `1` statement
-- Every compound statement must include single indent, when nesting statements, include `1` indent for each nest
-
+- Every compound statement must include opening and closing curly bracket, even if there is only `1` statement nested inside
+- Every compound statement must include single indent, when nesting statements, include `1` indent size for each nest
 ```c
 /* OK */
 if (c) {
@@ -495,7 +494,7 @@ if (a) {
 }
 ```
 
-- Never do compound statement without braces, even in case of single statement. Example below shows bad practice.
+- Never do compound statement without curly bracket, even in case of single statement. Example below shows bad practice.
 ```c
 if (a) do_b();
 else do_c();
