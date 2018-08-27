@@ -104,8 +104,8 @@ status = 0;
 #include "stdbool.h"
 bool status = true;
 ```
-- Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
 
+- Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
 - Always compare pointers against `NULL` value
 ```c
 /* OK, compare against NULL */
