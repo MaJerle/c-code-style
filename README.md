@@ -6,6 +6,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
 
+- Use `C99` standard
 - Do not use tabs, use spaces instead
 - Use `4` spaces per indent level
 - Use `1` space between keyword and opening bracket
@@ -66,7 +67,7 @@ my_func(void) {
 }
 ```
 
-- Do not inizialize variables in `for` loop
+- Do not declare variables in `for` loop
 ```c
 /* OK */
 int i;
@@ -133,7 +134,7 @@ if (ptr || !ptr) {
  * any type may be passed for data,
  * thus use `void *`
  */
- /* OK example */
+/* OK example */
 void
 send_data(const void* data, size_t len) { /* OK */
     /* Do not cast `void *` or `const void *` */
@@ -167,6 +168,7 @@ my_func(int size) {
     int arr[size];      /* Wrong, do not use VLA */
 }
 ```
+
 - Always use `/* comment */` for comments, even for *single-line* comment
 - Always include check for `C++` with `extern` keyword in header file
 - Every function must include *doxygen-enabled* comment, even if function is `static`
@@ -406,6 +408,18 @@ typedef enum {
     MY_ENUM_TESTA,
     my_enum_testb,
 } my_enum_t;
+```
+
+- When initializing structure on declaration, use `C99` initialization style
+```c
+/* OK */
+a_t a = {
+    .a = 4,
+    .b = 5,
+};
+
+/* Wrong */
+a_t a = {1, 2};
 ```
 
 # Compound statements
