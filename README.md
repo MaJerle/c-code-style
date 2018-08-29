@@ -518,17 +518,21 @@ if (a) {
 }
 ```
 
-- Never do compound statement without curly bracket, even in case of single statement. Example below shows bad practice.
+- Never do compound statement without curly bracket, even in case of single statement. Examples below show bad practices
 ```c
 if (a) do_b();
 else do_c();
+
+if (a) do_a(); else do_b();
 ```
 
 ### Switch statement
 
 - Make single `indent` for every case statement
+- Use addiional single *indent* for `break` statement for each `case`
 ```c
 /* OK, every case has single indent */
+/* OK, every break has additional indent */
 switch (check()) {
     case 0:
         do_a();
