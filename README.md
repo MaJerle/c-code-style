@@ -67,15 +67,25 @@ my_func(void) {
 }
 ```
 
-- Do not declare variables in `for` loop
+- Declare counter variables in `for` loop
 ```c
 /* OK */
+for (int i = 0; i < 10; i++)
+
+/* OK, if you need counter variable later */
 int i;
-/* ... */
-for (i = 0; i < 10; i++) ...
+for (i = 0; i < 10; i++) {
+    if (...) {
+        break;
+    }
+}
+if (i == 10) {
+
+}
 
 /* Wrong */
-for (int i = 0; i < 10; i++)
+int i;
+for (i = 0; i < 10; i++) ...
 ```
 
 - Avoid variable assignment with function call in declaration, except for single variables
