@@ -526,6 +526,24 @@ else do_c();
 if (a) do_a(); else do_b();
 ```
 
+- Empty `while`, `do-while` or `for` loops must include brackets
+```c
+/* OK */
+while (is_register_bit_set()) {}
+
+/* OK */
+while (is_register_bit_set()) {
+    
+}
+
+/* Wrong */
+while (is_register_bit_set());
+
+/* Wrong */
+while (is_register_bit_set()) {
+}
+```
+
 ### Switch statement
 
 - Make single `indent` for every case statement
