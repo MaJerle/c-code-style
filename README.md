@@ -597,7 +597,8 @@ switch (var) {
 }
 ```
 
-- If local variables are required, use curly brackets and put `break` statement inside. Put curly bracket in the same line as `case` statement
+- If local variables are required, use curly brackets and put `break` statement inside.
+    - Put opening curly bracket in the same line as `case` statement
 ```c
 switch (a) {
     /* OK */
@@ -627,7 +628,7 @@ switch (a) {
 #define MY_MACRO(x)         ((x) * (x))
 
 /* Wrong */
-#define sqaure(x)           ((x) * (x))
+#define square(x)           ((x) * (x))
 ```
 
 - Always protect input parameters with parentheses
@@ -697,7 +698,8 @@ Documented code allows doxygen to parse and general html/pdf/latex output, thus 
  * \brief           Holds pointer to first entry in linked list
  *                  Beginning of this text is 5 tabs (20 spaces) from beginning of line
  */
-static type_t* list;
+static
+type_t* list;
 ```
 
 - Every structure/enumeration member must include documentation
