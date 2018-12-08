@@ -353,7 +353,7 @@ char *a;
 char * a;
 ```
 
-- When declaring multiple pointer variables, you may declare them with asterix alighed to variable name
+- When declaring multiple pointer variables, you may declare them with asterix aligned to variable name
 ```c
 /* OK */
 char *p, *n;
@@ -544,10 +544,24 @@ while (is_register_bit_set()) {
 }
 ```
 
+- If `while` (or `for`, `do-while`, etc) is empty, which can be a case in embedded programming, use empty single-line brackets
+```c
+/* Wait for bit to be set in embedded hardware unit
+uint32_t* addr = HW_PERIPH_REGISTER_ADDR;
+
+/* Wait bit 13 to be ready */
+while (*addr & (1 << 13)) { }       /* OK, empty loop includes curly brackets with single space */
+while (*addr & (1 << 13)) {}        /* Wrong */
+while (*addr & (1 << 13)) {         /* Wrong */
+
+}
+while (*addr & (1 << 13));          /* Wrong */
+```
+
 ### Switch statement
 
-- Make single `indent` for every case statement
-- Use addiional single *indent* for `break` statement for each `case`
+- Add *single indent* for every `case` statement
+- Use additional *single indent* for `break` statement in each `case` or `default`
 ```c
 /* OK, every case has single indent */
 /* OK, every break has additional indent */
