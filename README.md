@@ -691,7 +691,7 @@ point_p p;                  /* Create new point */
 SET_POINT(&p, 3, 4);        /* Set point to position 3, 4. This evaluates to... */
 (&p)->px = (3); (&p)->py = (4); /* ... to this. In this example it is not a problem. */
 
-/* Consider this ugly code which may some programmers to (not recommended, but valid) */
+/* Consider this ugly code, however it is valid by C standard (not recommended) */
 if (a)                      /* If a is true */
     if (b)                  /* If b is true */
         SET_POINT(&p, 3, 4);/* Set point to x = 3, y = 4 */
@@ -718,7 +718,7 @@ if (a)
  * Ask yourself a question: To which `if` statement `else` keyword belongs?
  *
  * Based on first part of code, answer is straight-forward. To inner `if` statement when we check `b` condition
- * Actual answer: Error as `else` does not belong anywhere
+ * Actual answer: Compilation error as `else` belongs nowhere
  */
 
 /* Better and correct implementation of macro */
