@@ -359,7 +359,7 @@ char * a;
 char *p, *n;
 ```
 
-# Structures and enumerations
+# Structures, enumerations, typedefs
 
 - Structure or enumeration name must be lowercase with optional underscore `_` character between words
 - Structure or enumeration may contain `typedef` keyword
@@ -430,6 +430,13 @@ a_t a = {
 
 /* Wrong */
 a_t a = {1, 2};
+```
+
+- When new typedef is introduced for function handles, use `_fn` suffix
+```c
+/* Function accepts 2 parameters and returns uint8_t */
+/* Name of typedef has `_fn` suffix
+typedef uint8_t (*my_func_typedef_fn)(uint8_t p1, const char* p2);
 ```
 
 # Compound statements
@@ -648,13 +655,104 @@ switch (a) {
 - Always protect input parameters with parentheses
 ```c
 /* OK */
-#define min(x, y)           ((x) < (y) ? (x) : (y))
+#define MIN(x, y)           ((x) < (y) ? (x) : (y))
 
 /* Wrong */
-#define min(x, y)           x < y ? x : y
+#define MIN(x, y)           x < y ? x : y
+```
+
+- Always protect final macro evaluation with parenthesis
+```c
+/* Wrong */
+#define MIN(x, y)           (x) < (y) ? (x) : (y)
+#define SUM(x, y)           (x) + (y)
+
+/* Imagine result of this equation using wrong SUM implementation */
+int x = 5 * SUM(3, 4);      /* Expected result is 5 * 7 = 35 */
+int x = 5 * (3) + (4);      /* It is evaluated to this, final result = 19 which is not what we expect */
+
+/* Correct implementation */
+#define MIN(x, y)           ((x) < (y) ? (x) : (y))
+#define SUM(x, y)           ((x) + (y))
+```
+
+- When macro uses multiple statements, protect it using `do-while (0)` statement
+```c
+typedef struct {
+    int px, py;
+} point_t;
+point_p p;                  /* Create new point */
+
+/* Wrong implementation */
+
+/* Define macro to set point */
+#define SET_POINT(p, x, y)  (p)->px = (x); (p)->py = (y)    /* 2 statements. Last one should not implement semicolon */
+
+SET_POINT(&p, 3, 4);        /* Set point to position 3, 4. This evaluates to... */
+(&p)->px = (3); (&p)->py = (4); /* ... to this. In this example it is not a problem. */
+
+/* Consider this ugly code which may some programmers to (not recommended, but valid) */
+if (a)                      /* If a is true */
+    if (b)                  /* If b is true */
+        SET_POINT(&p, 3, 4);/* Set point to x = 3, y = 4 */
+    else
+        SET_POINT(&p, 5, 6);/* Set point to x = 5, y = 6 */
+
+/* Evaluates to code below. Do you see the problem? */
+if (a)
+    if (b) 
+        (&p)->px = (3); (&p)->py = (4);
+    else
+        (&p)->px = (5); (&p)->py = (6);
+
+/* Or if we rewrite it a little */
+if (a)
+    if (b) 
+        (&p)->px = (3);
+        (&p)->py = (4);
+    else
+        (&p)->px = (5);
+        (&p)->py = (6);
+
+/*
+ * Ask yourself a question: To which `if` statement `else` keyword belongs?
+ *
+ * Based on first part of code, answer is straight-forward. To inner `if` statement when we check `b` condition
+ * Actual answer: Error as `else` does not belong anywhere
+ */
+
+/* Better and correct implementation of macro */
+#define SET_POINT(p, x, y)  do { (p)->px = (x); (p)->py = (y); } while (0)    /* 2 statements. No semicolon after while loop */
+/* Or even better */
+#define SET_POINT(p, x, y)  do {    \   /* Backslash indicates statement continues in new line */
+    (p)->px = (x);                  \
+    (p)->py = (y);                  \
+} while (0)                             /* 2 statements. No semicolon after while loop */
+
+/* Now original code evaluates to */
+if (a)
+    if (b) 
+        do { (&p)->px = (3); (&p)->py = (4); } while (0);
+    else
+        do { (&p)->px = (5); (&p)->py = (6); } while (0);
+
+/* Every part of `if` or `else` contains only `1` inner statement (do-while), thus we have valid evaluation */
+
+/* To make code perfect, use brackets for every if-ifelse-else statements */
+if (a) {                    /* If a is true */
+    if (b) {                /* If b is true */
+        SET_POINT(&p, 3, 4);/* Set point to x = 3, y = 4 */
+    } else {
+        SET_POINT(&p, 5, 6);/* Set point to x = 5, y = 6 */
+    }
+}
 ```
 
 - Always write macro documentation as regular function with additional `hideinitializer` doxygen keyword
+```c
+#define MY_MACRO(x)         ((x) * 2)
+```
+
 - Avoid using `#ifdef` or `#ifndef`. Use `defined()` or `!defined()` instead
 ```c
 #ifdef XYZ
