@@ -184,6 +184,7 @@ my_func(int size) {
 - Every function must include *doxygen-enabled* comment, even if function is `static`
 - Use English names/text for functions, variables, comments
 - Never cast function returning `void *`, eg. `uint8_t* ptr = (uint8_t *)func_returning_void_ptr();` as `void *` is safely promoted to any other pointer type
+- When casting to pointer type, always add space between type and asterix, eg. `uint8_t* t = (uint8_t *)var_width_diff_type`
 - Always respect code style already used in project or library
 
 # Comments
@@ -241,21 +242,22 @@ void MYFunc(void);
 void myFunc();
 ```
 
-- When function returns pointer, asterix character must be left aligned without space
+- When function returns pointer, add space between asterix and data type
 ```c
 /* OK */
-const char* my_func(void);
-my_struct_t* my_func(int a, int b);
+const char * my_func(void);
+my_struct_t * my_func(int a, int b);
 
 /* Wrong */
 const char *my_func(void);
-my_struct_t * my_func(void);
+my_struct_t* my_func(void);
 ```
 - Align all function prototypes (with the same/similar functionality) for better readability
 ```c
 /* OK, function names aligned */
 void        set(int a);
 my_type_t   get(void);
+my_ptr_t *  get_ptr(void);
 
 /* Wrong */
 void set(int a);
@@ -640,7 +642,7 @@ switch (a) {
 }
 ```
 
-# Macros and preprocessor
+# Macros and preprocessor directives
 
 - Always use macros instead of literal constants, specially for numbers
 - All macros must be fully uppercase, with optional underscore `_` character, except if they are clearly marked as function which may be in the future replaced with regular function syntax
@@ -760,7 +762,7 @@ if (a) {                    /* If a is true */
 #endif /* XYZ */
 ```
 
-- Always document `endif` statement
+- Always document `if/elif/else/endif` statements
 ```c
 /* OK */
 #if defined(XYZ)
