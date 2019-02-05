@@ -559,12 +559,12 @@ while (is_register_bit_set()) {
 uint32_t* addr = HW_PERIPH_REGISTER_ADDR;
 
 /* Wait bit 13 to be ready */
-while (*addr & (1 << 13)) { }       /* OK, empty loop includes curly brackets with single space */
-while (*addr & (1 << 13)) {}        /* Wrong */
+while (*addr & (1 << 13)) {}        /* OK, empty loop contains no spaces inside curly brackets */
+while (*addr & (1 << 13)) { }       /* Wrong */
 while (*addr & (1 << 13)) {         /* Wrong */
 
 }
-while (*addr & (1 << 13));          /* Wrong */
+while (*addr & (1 << 13));          /* Wrong, curly brackets are missing. Can lead to compiler warnings or unintentional bugs */
 ```
 
 ### Switch statement
