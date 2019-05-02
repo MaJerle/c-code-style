@@ -437,14 +437,14 @@ a_t a = {1, 2};
 - When new typedef is introduced for function handles, use `_fn` suffix
 ```c
 /* Function accepts 2 parameters and returns uint8_t */
-/* Name of typedef has `_fn` suffix
+/* Name of typedef has `_fn` suffix */
 typedef uint8_t (*my_func_typedef_fn)(uint8_t p1, const char* p2);
 ```
 
 # Compound statements
 
-- Every compound statement must include opening and closing curly bracket, even if there is only `1` statement nested inside
-- Every compound statement must include single indent, when nesting statements, include `1` indent size for each nest
+- Every compound statement must include opening and closing curly bracket, even if it includes only `1` nested statement
+- Every compound statement must include single indent; when nesting statements, include `1` indent size for each nest
 ```c
 /* OK */
 if (c) {
@@ -540,20 +540,14 @@ if (a) do_a(); else do_b();
 /* OK */
 while (is_register_bit_set()) {}
 
-/* OK */
-while (is_register_bit_set()) {
-    
-}
-
 /* Wrong */
 while (is_register_bit_set());
-
-/* Wrong */
+while (is_register_bit_set()) { }
 while (is_register_bit_set()) {
 }
 ```
 
-- If `while` (or `for`, `do-while`, etc) is empty, which can be a case in embedded programming, use empty single-line brackets
+- If `while` (or `for`, `do-while`, etc) is empty (it can be the case in embedded programming), use empty single-line brackets
 ```c
 /* Wait for bit to be set in embedded hardware unit
 uint32_t* addr = HW_PERIPH_REGISTER_ADDR;
@@ -612,6 +606,14 @@ switch (check()) {
 
 - Always include `default` statement
 ```c
+/* OK */
+switch (var) {
+    case 0: 
+        do_job(); 
+        break;
+    default: break;
+}
+
 /* Wrong, default is missing */
 switch (var) {
     case 0: 
@@ -639,6 +641,12 @@ switch (a) {
         int a;
         break;    
     }
+    
+    /* Wrong */
+    case 2: {
+        int a;   
+    }
+    break; 
 }
 ```
 
@@ -683,7 +691,7 @@ int x = 5 * (3) + (4);      /* It is evaluated to this, final result = 19 which 
 typedef struct {
     int px, py;
 } point_t;
-point_p p;                  /* Create new point */
+point_t p;                  /* Create new point */
 
 /* Wrong implementation */
 
