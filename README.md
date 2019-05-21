@@ -1,4 +1,4 @@
-# C style and coding rules
+# Recommended C style and coding rules
 
 This document describes C code style used by Tilen MAJERLE in his projects and libraries.
 
