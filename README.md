@@ -179,6 +179,21 @@ my_func(int size) {
 }
 ```
 
+- Always compare variable against zero, except if it is treated as `boolean` type
+- Never compare `boolean-treated` variables against zero or one. Use NOT (`!`) instead 
+```c
+size_t length = 5;  /* Counter variable */
+uint8_t is_ok = 0;  /* Boolean-treated variable */
+if (length)         /* Wrong, length is not treated as boolean */
+if (length > 0)     /* OK, length is treated as counter variable containing multi values, not only 0 or 1 */
+if (length == 0)    /* OK, length is treated as counter variable containing multi values, not only 0 or 1 */
+
+if (is_ok)          /* OK, variable is treated as boolean */
+if (!is_ok)         /* OK, -||- */
+if (is_ok == 1)     /* Wrong, never compare boolean variable against 1! */
+if (is_ok == 0)     /* Wrong, use ! for negative check */
+```
+
 - Always use `/* comment */` for comments, even for *single-line* comment
 - Always include check for `C++` with `extern` keyword in header file
 - Every function must include *doxygen-enabled* comment, even if function is `static`
