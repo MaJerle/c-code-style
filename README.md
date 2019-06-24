@@ -67,6 +67,32 @@ my_func(void) {
 }
 ```
 
+- Declare local variables in order
+    1. Custom structures and enumerations
+    2. Integer types, start with wider unsigned
+    3. Single/Double floating point
+```c
+int
+my_func(void) {
+    /* 1 */
+    my_struct_t my;     /* First custom structures */
+    my_struct_ptr_t* p; /* Pointers too */
+
+    /* 2 */
+    uint32_t a;
+    int32_t b;
+    uint16_t c;
+    int16_t g;
+    /* ... */
+
+    /* 3 */
+    double d;
+    float f;
+}
+```
+
+- Always declare local variables in beginning of block, before first executable statement
+
 - Declare counter variables in `for` loop
 ```c
 /* OK */
@@ -112,7 +138,7 @@ uint8_t status;
 status = 0;
 
 /* Wrong */
-#include "stdbool.h"
+#include <stdbool.h>
 bool status = true;
 ```
 
@@ -160,7 +186,7 @@ send_data(const void* data, int len) {    /* Wrong */
 - Always use brackets with `sizeof` operator.
 ```c
 /* OK */
-#include "stdlib.h"
+#include <stdlib.h>
 void my_func(size_t size) {
     int* arr;
     arr = malloc(sizeof(*arr) * n); /* OK, Allocate memory */
@@ -199,6 +225,9 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
 - Every function must include *doxygen-enabled* comment, even if function is `static`
 - Use English names/text for functions, variables, comments
 - Never cast function returning `void *`, eg. `uint8_t* ptr = (uint8_t *)func_returning_void_ptr();` as `void *` is safely promoted to any other pointer type
+    - Use `uint8_t* ptr = func_returning_void_ptr();` instead
+- Always use `<` and `>` for C Standard Library include files, eg. `#include <stdlib.h>`
+- Always use `""` for custom libraries, eg. `#include "my_library.h"`
 - When casting to pointer type, always add space between type and asterix, eg. `uint8_t* t = (uint8_t *)var_width_diff_type`
 - Always respect code style already used in project or library
 
