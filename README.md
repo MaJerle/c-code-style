@@ -146,7 +146,7 @@ bool status = true;
 - Always compare pointers against `NULL` value
 ```c
 /* OK, compare against NULL */
-uint8_t* ptr;
+void* ptr;
 if (ptr == NULL || ptr != NULL) {
 
 }
@@ -224,6 +224,8 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
 - Always include check for `C++` with `extern` keyword in header file
 - Every function must include *doxygen-enabled* comment, even if function is `static`
 - Use English names/text for functions, variables, comments
+- Use *lowercase* characters for variables
+- Use *underscore* if variable contains multiple names, eg. `force_redraw`. Do not use `forceRedraw`
 - Never cast function returning `void *`, eg. `uint8_t* ptr = (uint8_t *)func_returning_void_ptr();` as `void *` is safely promoted to any other pointer type
     - Use `uint8_t* ptr = func_returning_void_ptr();` instead
 - Always use `<` and `>` for C Standard Library include files, eg. `#include <stdlib.h>`
