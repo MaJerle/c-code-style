@@ -29,9 +29,10 @@
  * This file is part of my_library.
  *
  * Author:          Tilen MAJERLE <tilen@majerle.eu>
+ * Version:         $_version_$
  */
-#ifndef __TEMPLATE_H
-#define __TEMPLATE_H
+#ifndef TEMPLATE_HDR_H
+#define TEMPLATE_HDR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,4 +46,4 @@ int divide(int a, int b);
 }
 #endif /* __cplusplus */
 
-#endif /* __TEMPLATE_H */
+#endif /* TEMPLATE_HDR_H */

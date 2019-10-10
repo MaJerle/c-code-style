@@ -29,6 +29,7 @@
  * This file is part of my_library.
  *
  * Author:          Tilen MAJERLE <tilen@majerle.eu>
+ * Version:         v1.y.z
  */
 #include "template.h"
 
