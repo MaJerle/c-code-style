@@ -230,7 +230,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
     - Use `uint8_t* ptr = func_returning_void_ptr();` instead
 - Always use `<` and `>` for C Standard Library include files, eg. `#include <stdlib.h>`
 - Always use `""` for custom libraries, eg. `#include "my_library.h"`
-- When casting to pointer type, always add space between type and asterix, eg. `uint8_t* t = (uint8_t *)var_width_diff_type`
+- When casting to pointer type, always add space between type and asterisk, eg. `uint8_t* t = (uint8_t *)var_width_diff_type`
 - Always respect code style already used in project or library
 
 # Comments
@@ -241,7 +241,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
 /* This is comment (ok) */
 ```
 
-- For multi-line comments use `space+asterix` for every line
+- For multi-line comments use `space+asterisk` for every line
 ```c
 /*
  * This is multi-line comments,
@@ -249,11 +249,11 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
  */
  
 /**
- * Wrong, use double-asterix only for doxygen documentation
+ * Wrong, use double-asterisk only for doxygen documentation
  */
  
 /*
-* Single line comment without space before asterix (wrong)
+* Single line comment without space before asterisk (wrong)
 */
 
 /*
@@ -288,7 +288,7 @@ void MYFunc(void);
 void myFunc();
 ```
 
-- When function returns pointer, add space between asterix and data type
+- When function returns pointer, add space between asterisk and data type
 ```c
 /* OK */
 const char * my_func(void);
@@ -330,7 +330,7 @@ int foo(void) {
 }
 ```
 
-- When function returns pointer, asterix character must include space between type and character (`char *`)
+- When function returns pointer, asterisk character must include space between type and character (`char *`)
 ```c
 /* OK */
 const char *
@@ -391,7 +391,7 @@ if (a) {
 }
 ```
 
-- Declare pointer variables with asterix aligned to type
+- Declare pointer variables with asterisk aligned to type
 ```c
 /* OK */
 char* a;
@@ -401,7 +401,7 @@ char *a;
 char * a;
 ```
 
-- When declaring multiple pointer variables, you may declare them with asterix aligned to variable name
+- When declaring multiple pointer variables, you may declare them with asterisk aligned to variable name
 ```c
 /* OK */
 char *p, *n;
@@ -988,7 +988,7 @@ Please check below some notes on files
                     /* Here is empty line */
 ```
 
-- Every file (*header* or *source*) must include license (opening comment includes single asterix as this must be ignored by doxygen)
+- Every file (*header* or *source*) must include license (opening comment includes single asterisk as this must be ignored by doxygen)
 - Use the same license as already used by project/library
 ```c
 /**
