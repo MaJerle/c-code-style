@@ -16,7 +16,7 @@ int a = sum(4, 3);      /* OK */
 int a = sum (4, 3);     /* Wrong */
 ```
 
-- Opening curly bracket is always on the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
+- Opening curly bracket is always at the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
 ```c
 int a;
 for (a = 0; a < 5; i++) {           /* OK */
@@ -91,7 +91,7 @@ my_func(void) {
 }
 ```
 
-- Always declare local variables in beginning of block, before first executable statement
+- Always declare local variables in beginning of the block, before first executable statement
 
 - Declare counter variables in `for` loop
 ```c
@@ -276,8 +276,8 @@ my_func(void) {
 
 # Functions
 
-- Every function which may be access from outside module, must include function *prototype* (or *declaration*)
-- Function names must be lowercase, optionally separated with underscore `_` character
+- Every function which may have access from outside its module, must include function *prototype* (or *declaration*)
+- Function name must be lowercase, optionally separated with underscore `_` character
 ```c
 /* OK */
 void my_func(void);
