@@ -737,7 +737,7 @@ int x = 5 * (3) + (4);      /* It is evaluated to this, final result = 19 which 
 typedef struct {
     int px, py;
 } point_t;
-point_t p;                  /* Create new point */
+point_t p;                  /* Define new point */
 
 /* Wrong implementation */
 
@@ -745,7 +745,7 @@ point_t p;                  /* Create new point */
 #define SET_POINT(p, x, y)  (p)->px = (x); (p)->py = (y)    /* 2 statements. Last one should not implement semicolon */
 
 SET_POINT(&p, 3, 4);        /* Set point to position 3, 4. This evaluates to... */
-(&p)->px = (3); (&p)->py = (4); /* ... to this. In this example it is not a problem. */
+(&p)->px = (3); (&p)->py = (4); /* ... to this. In this example this is not a problem. */
 
 /* Consider this ugly code, however it is valid by C standard (not recommended) */
 if (a)                      /* If a is true */
