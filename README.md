@@ -16,6 +16,8 @@ int a = sum(4, 3);      /* OK */
 int a = sum (4, 3);     /* Wrong */
 ```
 
+- Never use `__` or `_` prefix for variables/functions/macros/types. This is reserved for C language itself
+- Use only lowercase characters for variables/functions/macros/types with optional underscore `_` char
 - Opening curly bracket is always at the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
 ```c
 int a;
@@ -792,7 +794,7 @@ if (a)
     else
         do { (&p)->px = (5); (&p)->py = (6); } while (0);
 
-/* Every part of `if` or `else` contains only `1` inner statement (do-while), thus we have valid evaluation */
+/* Every part of `if` or `else` contains only `1` inner statement (do-while), hence this is valid evaluation */
 
 /* To make code perfect, use brackets for every if-ifelse-else statements */
 if (a) {                    /* If a is true */
@@ -973,13 +975,10 @@ get_data(const void* in) {
 #define MIN(x, y)       ((x) < (y) ? (x) : (y))
 ```
 
-# Template files
-
-Template files for header and source are included in repository.
-Please check below some notes on files
+# Header/source files
 
 - Leave single empty line at the end of file
-- Every file must include doxygen annotation for `file` and `brief` description followed by empty line
+- Every file must include doxygen annotation for `file` and `brief` description followed by empty line (when using doxygen)
 ```c
 /**
  * \file            template.h
@@ -997,7 +996,7 @@ Please check below some notes on files
  */
 
 /*
- * Copyright (c) 2018 FirstName LastName
+ * Copyright (c) year FirstName LASTNAME
  *  
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -1021,20 +1020,41 @@ Please check below some notes on files
  *
  * This file is part of library_name.
  *
- * Author:          Author Name <optional_email@example.com>
+ * Author:          FirstName LASTNAME <optional_email@example.com>
  */
 ```
 
 - Header file must include guard `#ifndef`
 - Header file must include `C++` check
+- Header file must include only every other header file in order to compile correctly, but not more (.c should include the rest if required)
+- Header file must only expose module public variables/types/functions
+- Use `extern` for global module variables in header file, define them in source file later
+```
+/* file.h ... */
+#ifndef ...
+
+extern int my_variable; /* This is global variable declaration in header */
+
+#endif 
+
+/* file.c ... */
+int my_variable;        /* Actually defined in source */
+```
+- Never include `.c` files in another `.c` file
+- `.c` file should first include corresponding `.h` file, later others, unless otherwise explicitly necessary
+- Do not include module private declarations in header file
+
+- Header file example (no license for sake of an example)
 ```c
 /* License comes here */
-#ifndef __TEMPLATE_H
-#define __TEMPLATE_H
+#ifndef TEMPLATE_HDR_H
+#define TEMPLATE_HDR_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* Include other headers */
 
 /* File content here */
 
@@ -1042,5 +1062,5 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif /* __TEMPLATE_H */
+#endif /* TEMPLATE_HDR_H */
 ```
