@@ -69,7 +69,7 @@ my_func(void) {
 
 - Declare local variables in order
     1. Custom structures and enumerations
-    2. Integer types, start with wider unsigned
+    2. Integer types, wider unsigned type first
     3. Single/Double floating point
 ```c
 int
@@ -155,6 +155,17 @@ if (ptr == NULL || ptr != NULL) {
 if (ptr || !ptr) {
 
 }
+```
+
+- Always use *pre-increment (and decrement respectively)* instead of *post-increment (and decrement respectively)*
+```c
+int a = 0;
+...
+
+a++;            /* Wrong */
+++a;            /* OK */
+
+for (int j = 0; j < 10; ++j) {}     /* OK */
 ```
 
 - Always use `size_t` for length or size variables
@@ -605,6 +616,30 @@ while (*addr & (1 << 13)) {         /* Wrong */
 
 }
 while (*addr & (1 << 13));          /* Wrong, curly brackets are missing. Can lead to compiler warnings or unintentional bugs */
+```
+- Always prefer using loops in this order: `for`, `do-while`, `while`
+- Avoid incrementing variables inside loop block if possible, see examples
+
+```c
+/* Not recommended */
+int a = 0;
+while (a < 10) {
+    ...
+    ...
+    ++a;
+}
+
+/* Better */
+for (int a = 0; a < 10; ++a) {
+
+}
+
+/* Better, if inc may not happen in every cycle */
+for (int a = 0; a < 10; ) {
+    if (...) {
+        ++a;
+    }
+}
 ```
 
 ### Switch statement
