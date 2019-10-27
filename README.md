@@ -21,11 +21,11 @@ int a = sum (4, 3);     /* Wrong */
 - Opening curly bracket is always at the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
 ```c
 int a;
-for (a = 0; a < 5; i++) {           /* OK */
+for (a = 0; a < 5; ++i) {           /* OK */
 }
-for (a = 0; a < 5; i++){            /* Wrong */
+for (a = 0; a < 5; ++i){            /* Wrong */
 }
-for (a = 0; a < 5; i++)             /* Wrong */
+for (a = 0; a < 5; ++i)             /* Wrong */
 {
 }
 ```
@@ -34,10 +34,10 @@ for (a = 0; a < 5; i++)             /* Wrong */
 ```c
 int a;
 a = 3 + 4;              /* OK */
-for (a = 0; a < 5; a++) /* OK */
+for (a = 0; a < 5; ++a) /* OK */
 a=3+4;                  /* Wrong */
 a = 3+4;                /* Wrong */
-for (a=0;a<5;a++)       /* Wrong */
+for (a=0;a<5;++a)       /* Wrong */
 ```
 
 - Use single space after every comma
@@ -98,11 +98,11 @@ my_func(void) {
 - Declare counter variables in `for` loop
 ```c
 /* OK */
-for (int i = 0; i < 10; i++)
+for (int i = 0; i < 10; ++i)
 
 /* OK, if you need counter variable later */
 int i;
-for (i = 0; i < 10; i++) {
+for (i = 0; i < 10; ++i) {
     if (...) {
         break;
     }
@@ -113,7 +113,7 @@ if (i == 10) {
 
 /* Wrong */
 int i;
-for (i = 0; i < 10; i++) ...
+for (i = 0; i < 10; ++i) ...
 ```
 
 - Avoid variable assignment with function call in declaration, except for single variables
@@ -626,7 +626,8 @@ while (*addr & (1 << 13));          /* Wrong, curly brackets are missing. Can le
 /* Not recommended */
 int a = 0;
 while (a < 10) {
-    ...
+    .
+    ..
     ...
     ++a;
 }
