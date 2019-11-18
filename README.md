@@ -172,6 +172,34 @@ for (int j = 0; j < 10; ++j) {}     /* OK */
 
 - Always use `size_t` for length or size variables
 - Always use `const` for pointer if function should not modify memory pointed to by `pointer`
+- Always use `const` for function parameter or variable, if it should not be modified
+```c
+
+/* When d could be modified, data pointed to by d could not be modified */
+void
+my_func(const void* d) {
+
+}
+
+/* When d and data pointed to by d both could not be modified */
+void
+my_func(const void* const d) {
+
+}
+
+/* Not required, it is advised */
+void
+my_func(const size_t len) {
+
+}
+
+/* When d should not be modified inside function, only data pointer to by d could be modified */
+void
+my_func(void* const d) {
+
+}
+```
+
 - When function may accept pointer of any type, always use `void *`, do not use `uint8_t *`
     - Function must take care of proper casting in implementation
 ```c
