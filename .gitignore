@@ -23,6 +23,7 @@
 *.__i
 *.i
 *.txt
+!docs/*.txt
 RTE/
 
 # IAR Settings  
