@@ -39,7 +39,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* Function prototypes, name aligned, lowercase names */
-int	sum(int a, int b);
+int sum(int a, int b);
 int divide(int a, int b);
 
 #ifdef __cplusplus
