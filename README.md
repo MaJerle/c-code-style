@@ -93,7 +93,7 @@ my_func(void) {
 }
 ```
 
-- Always declare local variables in beginning of the block, before first executable statement
+- Always declare local variables at the beginning of the block, before first executable statement
 
 - Declare counter variables in `for` loop
 ```c
@@ -193,7 +193,7 @@ my_func(const size_t len) {
 
 }
 
-/* When d should not be modified inside function, only data pointer to by d could be modified */
+/* When d should not be modified inside function, only data pointed to by d could be modified */
 void
 my_func(void* const d) {
 
@@ -224,6 +224,8 @@ send_data(const void* data, int len) {    /* Wrong */
 ```
 
 - Never use *Variable Length Array* (VLA). Use dynamic memory allocation instead with standard C `malloc` and `free` functions or if library/project provides custom memory allocation, use its implementation
+    - Take a look at [LwMEM](https://github.com/MaJerle/lwmem), custom memory management library
+
 - Always use brackets with `sizeof` operator.
 ```c
 /* OK */
