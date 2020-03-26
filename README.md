@@ -122,7 +122,7 @@ void
 a(void) {
     /* Avoid function calls when declaring variable */
     int a, b = sum(1, 2);
-    
+
     /* Use this */
     int a, b;
     b = sum(1, 2);
@@ -237,7 +237,7 @@ void my_func(size_t size) {
     if (arr == NULL) {
         /* FAIL, no memory */
     }
-    
+
     free(arr);  /* Free memory after usage */
 }
 
@@ -249,7 +249,7 @@ my_func(int size) {
 ```
 
 - Always compare variable against zero, except if it is treated as `boolean` type
-- Never compare `boolean-treated` variables against zero or one. Use NOT (`!`) instead 
+- Never compare `boolean-treated` variables against zero or one. Use NOT (`!`) instead
 ```c
 size_t length = 5;  /* Counter variable */
 uint8_t is_ok = 0;  /* Boolean-treated variable */
@@ -290,11 +290,11 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
  * This is multi-line comments,
  * written in 2 lines (ok)
  */
- 
+
 /**
  * Wrong, use double-asterisk only for doxygen documentation
  */
- 
+
 /*
 * Single line comment without space before asterisk (wrong)
 */
@@ -311,7 +311,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
 void
 my_func(void) {
     char a, b;
-                                                
+
     a = call_func_returning_char_a(a);          /* This is comment with 12*4 spaces indent from beginning of line */
     b = call_func_returning_char_a_but_func_name_is_very_long(a);   /* This is comment, aligned to 4-spaces indent */
 }
@@ -398,7 +398,7 @@ int my_var;
 int myvar;
 
 /* Wrong */
-int A; 
+int A;
 int myVar;
 int MYVar;
 ```
@@ -547,7 +547,7 @@ if (c)
     do_a();
 else
     do_b();
-    
+
 /* Wrong */
 if (c) do_a();
 else do_b();
@@ -567,7 +567,7 @@ if (a) {
 /* Wrong */
 if (a) {
 
-} 
+}
 else {
 
 }
@@ -575,7 +575,7 @@ else {
 /* Wrong */
 if (a) {
 
-} 
+}
 else
 {
 
@@ -722,16 +722,16 @@ switch (check()) {
 ```c
 /* OK */
 switch (var) {
-    case 0: 
-        do_job(); 
+    case 0:
+        do_job();
         break;
     default: break;
 }
 
 /* Wrong, default is missing */
 switch (var) {
-    case 0: 
-        do_job(); 
+    case 0:
+        do_job();
         break;
 }
 ```
@@ -748,19 +748,19 @@ switch (a) {
         /* ... */
         break;
     }
-    
+
     /* Wrong */
     case 1:
     {
         int a;
-        break;    
+        break;
     }
-    
+
     /* Wrong */
     case 2: {
-        int a;   
+        int a;
     }
-    break; 
+    break;
 }
 ```
 
@@ -824,14 +824,14 @@ if (a)                      /* If a is true */
 
 /* Evaluates to code below. Do you see the problem? */
 if (a)
-    if (b) 
+    if (b)
         (&p)->px = (3); (&p)->py = (4);
     else
         (&p)->px = (5); (&p)->py = (6);
 
 /* Or if we rewrite it a little */
 if (a)
-    if (b) 
+    if (b)
         (&p)->px = (3);
         (&p)->py = (4);
     else
@@ -855,7 +855,7 @@ if (a)
 
 /* Now original code evaluates to */
 if (a)
-    if (b) 
+    if (b)
         do { (&p)->px = (3); (&p)->py = (4); } while (0);
     else
         do { (&p)->px = (5); (&p)->py = (6); } while (0);
@@ -943,7 +943,7 @@ type_t* list;
 ```c
 /**
  * \brief           This is point struct
- * \note            This structure is used to calculate all point 
+ * \note            This structure is used to calculate all point
  *                      related stuff
  */
 typedef struct {
@@ -1063,24 +1063,24 @@ get_data(const void* in) {
 
 /*
  * Copyright (c) year FirstName LASTNAME
- *  
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
- * publish, distribute, sublicense, and/or sell copies of the Software, 
- * and to permit persons to whom the Software is furnished to do so, 
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
  * AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
@@ -1092,6 +1092,8 @@ get_data(const void* in) {
 
 - Header file must include guard `#ifndef`
 - Header file must include `C++` check
+- Include external header files outside `C++` check
+- Include external header files with STL C files first followed by application custom files
 - Header file must include only every other header file in order to compile correctly, but not more (.c should include the rest if required)
 - Header file must only expose module public variables/types/functions
 - Use `extern` for global module variables in header file, define them in source file later
@@ -1101,7 +1103,7 @@ get_data(const void* in) {
 
 extern int my_variable; /* This is global variable declaration in header */
 
-#endif 
+#endif
 
 /* file.c ... */
 int my_variable;        /* Actually defined in source */
@@ -1116,11 +1118,11 @@ int my_variable;        /* Actually defined in source */
 #ifndef TEMPLATE_HDR_H
 #define TEMPLATE_HDR_H
 
+/* Include headers */
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
-
-/* Include other headers */
 
 /* File content here */
 
