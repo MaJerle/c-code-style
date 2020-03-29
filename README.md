@@ -17,6 +17,7 @@ int a = sum (4, 3);     /* Wrong */
 ```
 
 - Never use `__` or `_` prefix for variables/functions/macros/types. This is reserved for C language itself
+    - Prefer `prv_` name prefix for strictly module-private functions
 - Use only lowercase characters for variables/functions/macros/types with optional underscore `_` char
 - Opening curly bracket is always at the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
 ```c
