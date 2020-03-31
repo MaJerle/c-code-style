@@ -12,8 +12,8 @@ Here are listed most obvious and important general rules. Please check them care
 - Use `1` space between keyword and opening bracket
 - Do not use space between function name and opening bracket
 ```c
-int a = sum(4, 3);      /* OK */
-int a = sum (4, 3);     /* Wrong */
+int32_t a = sum(4, 3);              /* OK */
+int32_t a = sum (4, 3);             /* Wrong */
 ```
 
 - Never use `__` or `_` prefix for variables/functions/macros/types. This is reserved for C language itself
@@ -21,19 +21,19 @@ int a = sum (4, 3);     /* Wrong */
 - Use only lowercase characters for variables/functions/macros/types with optional underscore `_` char
 - Opening curly bracket is always at the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
 ```c
-int a;
-for (a = 0; a < 5; ++i) {           /* OK */
+size_t i;
+for (i = 0; i < 5; ++i) {           /* OK */
 }
-for (a = 0; a < 5; ++i){            /* Wrong */
+for (i = 0; i < 5; ++i){            /* Wrong */
 }
-for (a = 0; a < 5; ++i)             /* Wrong */
+for (i = 0; i < 5; ++i)             /* Wrong */
 {
 }
 ```
 
 - Use single space before and after comparison and assignment operators
 ```c
-int a;
+int32_t a;
 a = 3 + 4;              /* OK */
 for (a = 0; a < 5; ++a) /* OK */
 a=3+4;                  /* Wrong */
@@ -49,13 +49,13 @@ func_name(4,3);         /* Wrong */
 
 - Do not initialize `static` and `global` variables to `0` (or `NULL`), let compiler do it for you
 ```c
-static int a;           /* OK */
-static int b = 4;       /* OK */
-static int a = 0;       /* Wrong */
+static int32_t a;       /* OK */
+static int32_t b = 4;   /* OK */
+static int32_t a = 0;   /* Wrong */
 
 void
 my_func(void) {
-    static int* ptr;    /* OK */
+    static int32_t* ptr;/* OK */
     static char abc = 0;/* Wrong */
 }
 ```
@@ -86,6 +86,7 @@ my_func(void) {
     int32_t b;
     uint16_t c;
     int16_t g;
+    char h;
     /* ... */
 
     /* 3 */
@@ -99,10 +100,10 @@ my_func(void) {
 - Declare counter variables in `for` loop
 ```c
 /* OK */
-for (int i = 0; i < 10; ++i)
+for (size_t i = 0; i < 10; ++i)
 
 /* OK, if you need counter variable later */
-int i;
+size_t i;
 for (i = 0; i < 10; ++i) {
     if (...) {
         break;
@@ -113,7 +114,7 @@ if (i == 10) {
 }
 
 /* Wrong */
-int i;
+size_t i;
 for (i = 0; i < 10; ++i) ...
 ```
 
@@ -122,10 +123,10 @@ for (i = 0; i < 10; ++i) ...
 void
 a(void) {
     /* Avoid function calls when declaring variable */
-    int a, b = sum(1, 2);
+    int32_t a, b = sum(1, 2);
 
     /* Use this */
-    int a, b;
+    int32_t a, b;
     b = sum(1, 2);
 
     /* This is ok */
@@ -148,8 +149,11 @@ bool status = true;
 - Never compare against `true`, eg. `if (check_func() == 1)`, use `if (check_func()) { ... }`
 - Always compare pointers against `NULL` value
 ```c
-/* OK, compare against NULL */
 void* ptr;
+
+/* ... */
+
+/* OK, compare against NULL */
 if (ptr == NULL || ptr != NULL) {
 
 }
@@ -162,13 +166,13 @@ if (ptr || !ptr) {
 
 - Always use *pre-increment (and decrement respectively)* instead of *post-increment (and decrement respectively)*
 ```c
-int a = 0;
+int32_t a = 0;
 ...
 
 a++;            /* Wrong */
 ++a;            /* OK */
 
-for (int j = 0; j < 10; ++j) {}     /* OK */
+for (size_t j = 0; j < 10; ++j) {}  /* OK */
 ```
 
 - Always use `size_t` for length or size variables
@@ -220,7 +224,7 @@ send_data(const void* data, size_t len) { /* OK */
 }
 
 void
-send_data(const void* data, int len) {    /* Wrong */
+send_data(const void* data, int len) {    /* Wrong, not not use int */
 }
 ```
 
@@ -232,7 +236,7 @@ send_data(const void* data, int len) {    /* Wrong */
 /* OK */
 #include <stdlib.h>
 void my_func(size_t size) {
-    int* arr;
+    int32_t* arr;
     arr = malloc(sizeof(*arr) * n); /* OK, Allocate memory */
     arr = malloc(sizeof *arr * n);  /* Wrong, brackets for sizeof operator are missing */
     if (arr == NULL) {
@@ -244,8 +248,8 @@ void my_func(size_t size) {
 
 /* Wrong */
 void
-my_func(int size) {
-    int arr[size];      /* Wrong, do not use VLA */
+my_func(size_t size) {
+    int32-t arr[size];  /* Wrong, do not use VLA */
 }
 ```
 
@@ -307,7 +311,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
 /* Single line comment (ok) */
 ```
 
-- Use `12` indents (`12 * 4` spaces) offset when commenting. If statement is larger than `12` indents, make comment `4-spaces` aligned (examples below)
+- Use `12` indents (`12 * 4` spaces) offset when commenting. If statement is larger than `12` indents, make comment `4-spaces` aligned (examples below) to next available indent
 ```c
 void
 my_func(void) {
@@ -336,7 +340,7 @@ void myFunc();
 ```c
 /* OK */
 const char * my_func(void);
-my_struct_t * my_func(int a, int b);
+my_struct_t * my_func(int32_t a, int32_t b);
 
 /* Wrong */
 const char *my_func(void);
@@ -345,19 +349,19 @@ my_struct_t* my_func(void);
 - Align all function prototypes (with the same/similar functionality) for better readability
 ```c
 /* OK, function names aligned */
-void        set(int a);
+void        set(int32_t a);
 my_type_t   get(void);
 my_ptr_t *  get_ptr(void);
 
 /* Wrong */
-void set(int a);
+void set(int32_t a);
 const char* get(void);
 ```
 
 - Function implementation must include return type and optional other keywords in separate line
 ```c
 /* OK */
-int
+int32_t
 foo(void) {
     return 0;
 }
@@ -369,7 +373,7 @@ get_string(void) {
 }
 
 /* Wrong */
-int foo(void) {
+int32_t foo(void) {
     return 0;
 }
 ```
@@ -394,23 +398,23 @@ foo(void) {
 - Make variable name all lowercase with optional underscore `_` character
 ```c
 /* OK */
-int a;
-int my_var;
-int myvar;
+int32_t a;
+int32_t my_var;
+int32_t myvar;
 
 /* Wrong */
-int A;
-int myVar;
-int MYVar;
+int32_t A;
+int32_t myVar;
+int32_t MYVar;
 ```
 
 - Group local variables together by `type`
 ```c
 void
 foo(void) {
-    int a, b;   /* OK */
+    int32_t a, b;   /* OK */
     char a;
-    char b;     /* Wrong, char type already exists */
+    char b;         /* Wrong, char type already exists */
 }
 ```
 
@@ -418,20 +422,20 @@ foo(void) {
 ```c
 void
 foo(void) {
-    int a;
+    int32_t a;
     a = bar();
-    int b;      /* Wrong, there is already executable statement */
+    int32_t b;      /* Wrong, there is already executable statement */
 }
 ```
 
 - You may declare new variables inside next indent level
 ```c
-int a, b;
+int32_t a, b;
 a = foo();
 if (a) {
-    int c, d;   /* OK, c and d are in if-statement scope */
+    int32_t c, d;   /* OK, c and d are in if-statement scope */
     c = foo();
-    int e;      /* Wrong, there was already executable statement inside block */
+    int32_t e;      /* Wrong, there was already executable statement inside block */
 }
 ```
 
@@ -457,7 +461,6 @@ char *p, *n;
 - Structure or enumeration may contain `typedef` keyword
 - All structure members must be lowercase
 - All enumeration members must be uppercase
-- Declare every member in its own line, even if they share the same type, eg. do not do `int a, b`
 - Structure/enumeration must follow doxygen documentation syntax
 
 When structure is declared, it may use one of `3` different options:
@@ -490,19 +493,19 @@ Examples of bad declarations and their suggested corrections
 /* a and b must be separated to 2 lines */
 /* Name of structure with typedef must include _t suffix */
 typedef struct {
-    int a, b;
+    int32_t a, b;
 } a;
 
 /* Corrected version */
 typedef struct {
-    int a;
-    int b;
+    int32_t a;
+    int32_t b;
 } a_t;
 
 /* Wrong name, it must not include _t suffix */
 struct name_t {
-    int a;
-    int b;
+    int32_t a;
+    int32_t b;
 };
 
 /* Wrong parameters, must be all uppercase */
@@ -587,7 +590,7 @@ else
 ```c
 /* OK */
 do {
-    int a;
+    int32_t a;
     a = do_a();
     do_b(a);
 } while (check());
@@ -655,7 +658,7 @@ while (*addr & (1 << 13));          /* Wrong, curly brackets are missing. Can le
 
 ```c
 /* Not recommended */
-int a = 0;
+int32_t a = 0;
 while (a < 10) {
     .
     ..
@@ -664,12 +667,12 @@ while (a < 10) {
 }
 
 /* Better */
-for (int a = 0; a < 10; ++a) {
+for (size_t a = 0; a < 10; ++a) {
 
 }
 
 /* Better, if inc may not happen in every cycle */
-for (int a = 0; a < 10; ) {
+for (size_t a = 0; a < 10; ) {
     if (...) {
         ++a;
     }
@@ -743,7 +746,7 @@ switch (var) {
 switch (a) {
     /* OK */
     case 0: {
-        int a, b;
+        int32_t a, b;
         char c;
         a = 5;
         /* ... */
@@ -753,13 +756,13 @@ switch (a) {
     /* Wrong */
     case 1:
     {
-        int a;
+        int32_t a;
         break;
     }
 
-    /* Wrong */
+    /* Wrong, break shall be inside */
     case 2: {
-        int a;
+        int32_t a;
     }
     break;
 }
@@ -793,8 +796,8 @@ switch (a) {
 #define SUM(x, y)           (x) + (y)
 
 /* Imagine result of this equation using wrong SUM implementation */
-int x = 5 * SUM(3, 4);      /* Expected result is 5 * 7 = 35 */
-int x = 5 * (3) + (4);      /* It is evaluated to this, final result = 19 which is not what we expect */
+int32_t x = 5 * SUM(3, 4);  /* Expected result is 5 * 7 = 35 */
+int32_t x = 5 * (3) + (4);  /* It is evaluated to this, final result = 19 which is not what we expect */
 
 /* Correct implementation */
 #define MIN(x, y)           ((x) < (y) ? (x) : (y))
@@ -804,7 +807,7 @@ int x = 5 * (3) + (4);      /* It is evaluated to this, final result = 19 which 
 - When macro uses multiple statements, protect it using `do-while (0)` statement
 ```c
 typedef struct {
-    int px, py;
+    int32_t px, py;
 } point_t;
 point_t p;                  /* Define new point */
 
@@ -948,9 +951,9 @@ type_t* list;
  *                      related stuff
  */
 typedef struct {
-    int x;                                      /*!< Point X coordinate */
-    int y;                                      /*!< Point Y coordinate */
-    int size;                                   /*!< Point size.
+    int32_t x;                                  /*!< Point X coordinate */
+    int32_t y;                                  /*!< Point Y coordinate */
+    int32_t size;                               /*!< Point size.
                                                     Since comment is very big,
                                                     you may go to next line */
 } point_t;
@@ -979,8 +982,8 @@ typedef enum {
  * \param[in]       b: Second number
  * \return          Sum of input values
  */
-int
-sum(int a, int b) {
+int32_t
+sum(int32_t a, int32_t b) {
     return a + b;
 }
 
@@ -992,7 +995,7 @@ sum(int a, int b) {
  * \param[out]      result: Output variable used to save result
  */
 void
-void_sum(int a, int b, int* result) {
+void_sum(int32_t a, int32_t b, int32_t* result) {
     *result = a + b;
 }
 ```
@@ -1102,12 +1105,12 @@ get_data(const void* in) {
 /* file.h ... */
 #ifndef ...
 
-extern int my_variable; /* This is global variable declaration in header */
+extern int32_t my_variable; /* This is global variable declaration in header */
 
 #endif
 
 /* file.c ... */
-int my_variable;        /* Actually defined in source */
+int32_t my_variable;        /* Actually defined in source */
 ```
 - Never include `.c` files in another `.c` file
 - `.c` file should first include corresponding `.h` file, later others, unless otherwise explicitly necessary
