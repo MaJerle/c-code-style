@@ -278,7 +278,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
     - Use `uint8_t* ptr = func_returning_void_ptr();` instead
 - Always use `<` and `>` for C Standard Library include files, eg. `#include <stdlib.h>`
 - Always use `""` for custom libraries, eg. `#include "my_library.h"`
-- When casting to pointer type, always add space between type and asterisk, eg. `uint8_t* t = (uint8_t *)var_width_diff_type`
+- When casting to pointer type, always align asterix to type, eg. `uint8_t* t = (uint8_t*)var_width_diff_type`
 - Always respect code style already used in project or library
 
 # Comments
@@ -336,26 +336,26 @@ void MYFunc(void);
 void myFunc();
 ```
 
-- When function returns pointer, add space between asterisk and data type
+- When function returns pointer, align asterix to return type
 ```c
 /* OK */
-const char * my_func(void);
-my_struct_t * my_func(int32_t a, int32_t b);
+const char* my_func(void);
+my_struct_t* my_func(int32_t a, int32_t b);
 
 /* Wrong */
 const char *my_func(void);
-my_struct_t* my_func(void);
+my_struct_t * my_func(void);
 ```
 - Align all function prototypes (with the same/similar functionality) for better readability
 ```c
 /* OK, function names aligned */
 void        set(int32_t a);
 my_type_t   get(void);
-my_ptr_t *  get_ptr(void);
+my_ptr_t*   get_ptr(void);
 
 /* Wrong */
 void set(int32_t a);
-const char* get(void);
+const char * get(void);
 ```
 
 - Function implementation must include return type and optional other keywords in separate line
@@ -367,7 +367,7 @@ foo(void) {
 }
 
 /* OK */
-static const char *
+static const char*
 get_string(void) {
     return "Hello world!\r\n";
 }
@@ -378,10 +378,10 @@ int32_t foo(void) {
 }
 ```
 
-- When function returns pointer, asterisk character must include space between type and character (`char *`)
+- When function returns pointer, asterisk character must be aligned to return type (`char*`)
 ```c
 /* OK */
-const char *
+const char*
 foo(void) {
     return "test";
 }
