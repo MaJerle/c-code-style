@@ -2,7 +2,22 @@
 
 This document describes C code style used by Tilen MAJERLE in his projects and libraries.
 
-# General rules
+## Table of Contents
+
+  - [Recommended C style and coding rules](#recommended-c-style-and-coding-rules)
+  - [General rules](#general-rules)
+  - [Comments](#comments)
+  - [Functions](#functions)
+  - [Variables](#variables)
+  - [Structures, enumerations, typedefs](#structures%2C-enumerations%2C-typedefs)
+  - [Compound statements](#compound-statements)
+    - [Switch statement](#switch-statement)
+  - [Macros and preprocessor directives](#macros-and-preprocessor-directives)
+  - [Documentation](#documentation)
+  - [Header/source files](#header%2Fsource-files)
+
+
+## General rules
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
 
@@ -281,7 +296,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
 - When casting to pointer type, always align asterix to type, eg. `uint8_t* t = (uint8_t*)var_width_diff_type`
 - Always respect code style already used in project or library
 
-# Comments
+## Comments
 
 - Comments starting with `//` are not allowed. Always use `/* comment */`, even for single-line comment
 ```c
@@ -322,7 +337,7 @@ my_func(void) {
 }
 ```
 
-# Functions
+## Functions
 
 - Every function which may have access from outside its module, must include function *prototype* (or *declaration*)
 - Function name must be lowercase, optionally separated with underscore `_` character
@@ -393,7 +408,7 @@ foo(void) {
 }
 ```
 
-# Variables
+## Variables
 
 - Make variable name all lowercase with optional underscore `_` character
 ```c
@@ -455,7 +470,7 @@ char * a;
 char *p, *n;
 ```
 
-# Structures, enumerations, typedefs
+## Structures, enumerations, typedefs
 
 - Structure or enumeration name must be lowercase with optional underscore `_` character between words
 - Structure or enumeration may contain `typedef` keyword
@@ -534,7 +549,7 @@ a_t a = {1, 2};
 typedef uint8_t (*my_func_typedef_fn)(uint8_t p1, const char* p2);
 ```
 
-# Compound statements
+## Compound statements
 
 - Every compound statement must include opening and closing curly bracket, even if it includes only `1` nested statement
 - Every compound statement must include single indent; when nesting statements, include `1` indent size for each nest
@@ -768,7 +783,7 @@ switch (a) {
 }
 ```
 
-# Macros and preprocessor directives
+## Macros and preprocessor directives
 
 - Always use macros instead of literal constants, specially for numbers
 - All macros must be fully uppercase, with optional underscore `_` character, except if they are clearly marked as function which may be in the future replaced with regular function syntax
@@ -926,7 +941,7 @@ if (a) {                    /* If a is true */
 #endif /* !defined(XYZ) */
 ```
 
-# Documentation
+## Documentation
 
 Documented code allows doxygen to parse and general html/pdf/latex output, thus it is very important to do it properly.
 
@@ -1045,7 +1060,7 @@ get_data(const void* in) {
 #define MIN(x, y)       ((x) < (y) ? (x) : (y))
 ```
 
-# Header/source files
+## Header/source files
 
 - Leave single empty line at the end of file
 - Every file must include doxygen annotation for `file` and `brief` description followed by empty line (when using doxygen)
