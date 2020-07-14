@@ -2,6 +2,21 @@
 
 This document describes C code style used by Tilen MAJERLE in his projects and libraries.
 
+## Table of Contents
+
+  - [Recommended C style and coding rules](#recommended-c-style-and-coding-rules)
+  - [General rules](#general-rules)
+  - [Comments](#comments)
+  - [Functions](#functions)
+  - [Variables](#variables)
+  - [Structures, enumerations, typedefs](#structures%2C-enumerations%2C-typedefs)
+  - [Compound statements](#compound-statements)
+    - [Switch statement](#switch-statement)
+  - [Macros and preprocessor directives](#macros-and-preprocessor-directives)
+  - [Documentation](#documentation)
+  - [Header/source files](#header%2Fsource-files)
+
+
 ## General rules
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
