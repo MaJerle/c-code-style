@@ -9,13 +9,14 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
   - [Comments](#comments)
   - [Functions](#functions)
   - [Variables](#variables)
-  - [Structures, enumerations, typedefs](#structures%2C-enumerations%2C-typedefs)
+  - [Structures, enumerations, typedefs](#structures-enumerations-typedefs)
   - [Compound statements](#compound-statements)
     - [Switch statement](#switch-statement)
   - [Macros and preprocessor directives](#macros-and-preprocessor-directives)
   - [Documentation](#documentation)
   - [Header/source files](#headersource-files)
   - [Artistic Style configuration](#artistic-style-configuration)
+  - [Eclipse formatter](#eclipseformatter)
 
 
 ## General rules
@@ -1163,3 +1164,11 @@ This repository contains `astyle-code-format.cfg` file which can be used with `A
 ```
 astyle --options="astyle-code-format.cfg" "input_path/*.c,*.h" "input_path2/*.c,*.h"
 ```
+
+## Eclipse formatter
+
+Repository contains `eclipse-ext-kr-format.xml` file that can be used with
+eclipse-based toolchains to set formatter options.
+
+It is based on K&R formatter with modifications to respect above rules.
+You can import settins within eclipse settins, under `Formatter` tab
