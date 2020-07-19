@@ -243,14 +243,14 @@ send_data(const void* data, int len) {    /* Wrong, not not use int */
 }
 ```
 
+- Always use brackets with `sizeof` operator
 - Never use *Variable Length Array* (VLA). Use dynamic memory allocation instead with standard C `malloc` and `free` functions or if library/project provides custom memory allocation, use its implementation
     - Take a look at [LwMEM](https://github.com/MaJerle/lwmem), custom memory management library
-
-- Always use brackets with `sizeof` operator.
 ```c
 /* OK */
 #include <stdlib.h>
-void my_func(size_t size) {
+void
+my_func(size_t size) {
     int32_t* arr;
     arr = malloc(sizeof(*arr) * n); /* OK, Allocate memory */
     arr = malloc(sizeof *arr * n);  /* Wrong, brackets for sizeof operator are missing */
@@ -264,7 +264,7 @@ void my_func(size_t size) {
 /* Wrong */
 void
 my_func(size_t size) {
-    int32-t arr[size];  /* Wrong, do not use VLA */
+    int32_t arr[size];  /* Wrong, do not use VLA */
 }
 ```
 
