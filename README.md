@@ -16,7 +16,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
   - [Documentation](#documentation)
   - [Header/source files](#headersource-files)
   - [Artistic Style configuration](#artistic-style-configuration)
-  - [Eclipse formatter](#eclipseformatter)
+  - [Eclipse formatter](#eclipse-formatter)
 
 
 ## General rules
