@@ -295,7 +295,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
     - Use `uint8_t* ptr = func_returning_void_ptr();` instead
 - Always use `<` and `>` for C Standard Library include files, eg. `#include <stdlib.h>`
 - Always use `""` for custom libraries, eg. `#include "my_library.h"`
-- When casting to pointer type, always align asterix to type, eg. `uint8_t* t = (uint8_t*)var_width_diff_type`
+- When casting to pointer type, always align asterisk to type, eg. `uint8_t* t = (uint8_t*)var_width_diff_type`
 - Always respect code style already used in project or library
 
 ## Comments
@@ -353,7 +353,7 @@ void MYFunc(void);
 void myFunc();
 ```
 
-- When function returns pointer, align asterix to return type
+- When function returns pointer, align asterisk to return type
 ```c
 /* OK */
 const char* my_func(void);
@@ -1171,4 +1171,4 @@ Repository contains `eclipse-ext-kr-format.xml` file that can be used with
 eclipse-based toolchains to set formatter options.
 
 It is based on K&R formatter with modifications to respect above rules.
-You can import settins within eclipse settins, under `Formatter` tab
+You can import it within eclipse settings, `Preferences -> LANGUAGE -> Code Style -> Formatter` tab.
