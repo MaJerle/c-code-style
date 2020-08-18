@@ -4,6 +4,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
 
 ## Table of Contents
 
+  - [The single most important rule](#the-single-most-important-rule)
   - [Recommended C style and coding rules](#recommended-c-style-and-coding-rules)
   - [General rules](#general-rules)
   - [Comments](#comments)
@@ -18,6 +19,15 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
   - [Artistic Style configuration](#artistic-style-configuration)
   - [Eclipse formatter](#eclipse-formatter)
 
+## The single most important rule
+
+Let's start with the quote from [GNOME developer](https://developer.gnome.org/programming-guidelines/stable/c-coding-style.html.en) site.
+
+> The single most important rule when writing code is this: *check the surrounding code and try to imitate it*.
+>
+> As a maintainer it is dismaying to receive a patch that is obviously in a different coding style to the surrounding code. This is disrespectful, like someone tromping into a spotlessly-clean house with muddy shoes.
+>
+> So, whatever this document recommends, if there is already written code and you are patching it, keep its current style consistent even if it is not your favorite style.
 
 ## General rules
 
