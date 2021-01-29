@@ -905,6 +905,12 @@ if (a) {                    /* If a is true */
 
 - Always write macro documentation as regular function with additional `hideinitializer` doxygen keyword
 ```c
+/**
+ * \brief           My macro description
+ * \param[in]       x: Input parameter
+ * \return          `x` multipled by `2`
+ * \hideinitializer
+ */
 #define MY_MACRO(x)         ((x) * 2)
 ```
 
