@@ -405,21 +405,6 @@ int32_t foo(void) {
 }
 ```
 
-- When function returns pointer, asterisk character must be aligned to return type (`char*`)
-```c
-/* OK */
-const char*
-foo(void) {
-    return "test";
-}
-
-/* Wrong */
-const char*
-foo(void) {
-    return "test";
-}
-```
-
 ## Variables
 
 - Make variable name all lowercase with optional underscore `_` character
