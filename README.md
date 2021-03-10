@@ -741,7 +741,8 @@ switch (var) {
     case 0:
         do_job();
         break;
-    default: break;
+    default:
+        break;
 }
 
 /* Wrong, default is missing */
