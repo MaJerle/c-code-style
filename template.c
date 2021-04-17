@@ -33,7 +33,7 @@
  */
 #include "template.h"
 
-/**
+/*
  * \brief           Sum `2` numbers
  * \param[in]       a: First value
  * \param[in]       b: Second value
