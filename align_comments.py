@@ -19,10 +19,8 @@ def scan(path):
 
 # Analyse file and modify content if necessary
 def align_comments(path):
+	file_needs_write = False
 	comment_start_position = 12 * 4
-
-	# Print text
-	print ("Analyzing file: " + path)
 
 	# Open file for read and read all lines
 	f = open(path, "r")
@@ -84,14 +82,19 @@ def align_comments(path):
 
 		# Add new line to output content
 		out_content = out_content + final_l
+		
+		# Check if necessary to write new file
+		if l != final_l:
+			file_needs_write = True
 
-	# Now open file again and write content
-	f = open(path, "w")
-	f.truncate()
-	f.write(out_content)
-	f.close()
+	if file_needs_write:		
+		# Now open file again and write content
+		f = open(path, "w")
+		f.truncate()
+		f.write(out_content)
+		f.close()
 
-	return True
+	return file_needs_write
 
 # Get base path
 base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -101,14 +104,30 @@ files = []
 files = files + scan(base_path + "/lwesp/lwesp/**/*.c") + scan(base_path + "/lwesp/lwesp/**/*.h")
 files = files + scan(base_path + "/lwgps/lwgps/**/*.c") + scan(base_path + "/lwgps/lwgps/**/*.h")
 files = files + scan(base_path + "/lwgsm/lwgsm/**/*.c") + scan(base_path + "/lwgsm/lwgsm/**/*.h")
+files = files + scan(base_path + "/lwjson/lwjson/**/*.c") + scan(base_path + "/lwjson/lwjson/**/*.h")
 files = files + scan(base_path + "/lwmem/lwmem/**/*.c") + scan(base_path + "/lwmem/lwmem/**/*.h")
 files = files + scan(base_path + "/lwow/lwow/**/*.c") + scan(base_path + "/lwow/lwow/**/*.h")
 files = files + scan(base_path + "/lwpkt/lwpkt/**/*.c") + scan(base_path + "/lwpkt/lwpkt/**/*.h")
 files = files + scan(base_path + "/lwprintf/lwprintf/**/*.c") + scan(base_path + "/lwprintf/lwprintf/**/*.h")
 files = files + scan(base_path + "/lwrb/lwrb/**/*.c") + scan(base_path + "/lwrb/lwrb/**/*.h")
+files = files + scan(base_path + "/lwshell/lwshell/**/*.c") + scan(base_path + "/lwshell/lwshell/**/*.h")
+files = files + scan(base_path + "/lwutil/lwutil/**/*.c") + scan(base_path + "/lwutil/lwutil/**/*.h")
+#files = files + scan(base_path + "/smart-house/lib/**/*.c") + scan(base_path + "/smart-house/lib/**/*.h")
 
 # Analyse all files
 for f in files:
 	if f.find('third_party') != -1:
 		continue
-	align_comments(f)
+	print("Analysing file: " + f)
+	if align_comments(f):
+		print("File modified: " + f)
+
+
+
+
+
+
+
+
+
+	
