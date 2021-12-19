@@ -37,6 +37,20 @@ Here are listed most obvious and important general rules. Please check them care
 - Do not use tabs, use spaces instead
 - Use `4` spaces per indent level
 - Use `1` space between keyword and opening bracket
+```c
+/* OK */
+if (condition)
+while (condition)
+for (init; condition; step)
+do {} while (condition)
+
+/* Wrong */
+if(condition)
+while(condition)
+for(init;condition;step)
+do {} while(condition)
+```
+
 - Do not use space between function name and opening bracket
 ```c
 int32_t a = sum(4, 3);              /* OK */
