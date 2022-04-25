@@ -21,7 +21,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
 
 ## The single most important rule
 
-Let's start with the quote from [GNOME developer](https://developer.gnome.org/programming-guidelines/stable/c-coding-style.html.en) site.
+Let's start with the quote from [GNOME developer](https://web.archive.org/web/20190921041348/https://developer.gnome.org/programming-guidelines/stable/c-coding-style.html.en) site.
 
 > The single most important rule when writing code is this: *check the surrounding code and try to imitate it*.
 >
