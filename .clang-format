@@ -4,12 +4,18 @@ Language:        Cpp
 AccessModifierOffset: -2
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: None
-AlignConsecutiveMacros: AcrossEmptyLines
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
 AlignConsecutiveAssignments: None
-AlignConsecutiveBitFields: None
+AlignConsecutiveBitFields:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
 AlignConsecutiveDeclarations: None
 AlignEscapedNewlines: Right
-AlignOperands:   Align
+AlignOperands: Align
 InsertBraces: true                                      # Control statements must have curly brackets
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
