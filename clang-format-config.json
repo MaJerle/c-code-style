@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "paths": [
+        {
+            "path": "projects/**/src/*.c",
+            "recursive": true
+        },
+        {
+            "path": "projects/**/include/*.h",
+            "recursive": true
+        },
+        {
+            "path": "lib/src/**/*.c",
+            "recursive": true
+        },
+        {
+            "path": "lib/include/**/*.h",
+            "recursive": true
+        }
+    ]
+}
