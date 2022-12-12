@@ -33,7 +33,7 @@ Let's start with the quote from [GNOME developer](https://developer.gnome.org/pr
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
 
-- Prefer using `clang-format` with formatting file attached to this repository.
+- Prefer using `clang-format` with formatting file attached to this repository (version `15.x` is minimum)
 - Use `C11` standard
 - Do not use tabs, use spaces instead
 - Use `4` spaces per indent level
