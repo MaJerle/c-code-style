@@ -33,7 +33,8 @@ Let's start with the quote from [GNOME developer](https://developer.gnome.org/pr
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
 
-- Use `C99` standard
+- Prefer using `clang-format` with formatting file attached to this repository.
+- Use `C11` standard
 - Do not use tabs, use spaces instead
 - Use `4` spaces per indent level
 - Use `1` space between keyword and opening bracket
@@ -137,6 +138,17 @@ my_func(void) {
 ```
 
 - Always declare local variables at the beginning of the block, before first executable statement
+- Always add trailing comma in the last element of structure (or its children) initialization (this helps clang-format to properly format structures)
+```c
+typedef struct {
+    int a, b;
+} str_t;
+
+str_t s = {
+    .a = 1,
+    .b = 2,   /* Comma here */
+}
+```
 
 - Declare counter variables in `for` loop
 ```c
