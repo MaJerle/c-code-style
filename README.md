@@ -4,8 +4,9 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
 
 ## Table of Contents
 
+- [Recommended C style and coding rules](#recommended-c-style-and-coding-rules)
+  - [Table of Contents](#table-of-contents)
   - [The single most important rule](#the-single-most-important-rule)
-  - [Recommended C style and coding rules](#recommended-c-style-and-coding-rules)
   - [General rules](#general-rules)
   - [Comments](#comments)
   - [Functions](#functions)
@@ -16,7 +17,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
   - [Macros and preprocessor directives](#macros-and-preprocessor-directives)
   - [Documentation](#documentation)
   - [Header/source files](#headersource-files)
-  - [Artistic Style configuration](#artistic-style-configuration)
+  - [Artistic style configuration](#artistic-style-configuration)
   - [Eclipse formatter](#eclipse-formatter)
 
 ## The single most important rule
@@ -138,7 +139,7 @@ my_func(void) {
 ```
 
 - Always declare local variables at the beginning of the block, before first executable statement
-- Always add trailing comma in the last element of structure (or its children) initialization (this helps clang-format to properly format structures)
+- Always add trailing comma in the last element of structure (or its children) initialization (this helps clang-format to properly format structures). Unless structure is very simple and short
 ```c
 typedef struct {
     int a, b;
@@ -148,6 +149,36 @@ str_t s = {
     .a = 1,
     .b = 2,   /* Comma here */
 }
+
+/* Examples of "complex" structure, with or with missing several trailing commas, after clang-format runs the formatting */
+static const my_struct_t my_var_1 = {
+    .type = TYPE1,
+    .type_data =
+        {
+            .type1 =
+                {
+                    .par1 = 0,
+                    .par2 = 1, /* Trailing comma here */
+                }, /* Trailing comma here */
+        },  /* Trailing comma here */
+};
+
+static const my_struct_t my_var_2 = {.type = TYPE2,
+                                     .type_data = {
+                                         .type2 =
+                                             {
+                                                 .par1 = 0,
+                                                 .par2 = 1,
+                                             },
+                                     }};    /* Missing comma here */
+static const my_struct_t my_var_3 = {.type = TYPE3,
+                                     .type_data = {.type3 = {
+                                                       .par1 = 0,
+                                                       .par2 = 1,
+                                                   }}}; /* Missing 2 commas here */
+
+/* No trailing commas - good only for small and simple structures */
+static const my_struct_t my_var_4 = {.type = TYPE4, .type_data = {.type4 = {.par1 = 0, .par2 = 1}}};
 ```
 
 - Declare counter variables in `for` loop
