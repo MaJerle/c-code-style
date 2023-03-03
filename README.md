@@ -107,8 +107,14 @@ my_func(void) {
 ```c
 void
 my_func(void) {
+    /* 1 */
     char a;             /* OK */
+    
+    /* 2 */
     char a, b;          /* OK */
+    
+    /* 3 */
+    char a;
     char b;             /* Wrong, variable with char type already exists */
 }
 ```
