@@ -7,6 +7,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
 - [Recommended C style and coding rules](#recommended-c-style-and-coding-rules)
   - [Table of Contents](#table-of-contents)
   - [The single most important rule](#the-single-most-important-rule)
+  - [Integration with VSCode](#integration-with-vscode)
   - [General rules](#general-rules)
   - [Comments](#comments)
   - [Functions](#functions)
@@ -29,6 +30,19 @@ Let's start with the quote from [GNOME developer](https://developer.gnome.org/pr
 > As a maintainer it is dismaying to receive a patch that is obviously in a different coding style to the surrounding code. This is disrespectful, like someone tromping into a spotlessly-clean house with muddy shoes.
 >
 > So, whatever this document recommends, if there is already written code and you are patching it, keep its current style consistent even if it is not your favorite style.
+
+## Integration with VSCode
+
+VScode comes with pre-installed `clang-format` tool (part of LLVM package) that has been design to help developers with auto-format tool during code development.
+
+As such, it allows users to format code on file change (and save).
+When file is saved, vscode will try to invoke the clang-format and format the code. Rules to use are in `.clang-format` file. If clang-format cannot find the rules in the path of current file, it will go all the way up to the root, until one is found. If still none is available, default rules are then being used.
+
+This repository contains always up-to-date `.clang-format` file with rules matching explained ones.
+You can place the folder in the root or your project or even in the root of your software development projects -> use one file for all!
+
+Some configurations shall be enabled:
+![VSCode configuration](images/vscode-settings.png) 
 
 ## General rules
 
