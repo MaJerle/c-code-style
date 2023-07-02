@@ -18,6 +18,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
   - [Macros and preprocessor directives](#macros-and-preprocessor-directives)
   - [Documentation](#documentation)
   - [Header/source files](#headersource-files)
+  - [Clang format integration](#clang-format-integration)
   - [Artistic style configuration](#artistic-style-configuration)
   - [Eclipse formatter](#eclipse-formatter)
 
@@ -104,16 +105,28 @@ func_name(5, 4);        /* OK */
 func_name(4,3);         /* Wrong */
 ```
 
-- Do not initialize `static` and `global` variables to `0` (or `NULL`), let compiler do it for you
+- Do not initialize `global` variables to any default value (or `NULL`), implement it in the dedicated `init` function (if required).
+```c
+static int32_t a;       /* Wrong */
+static int32_t b = 4;   /* Wrong */
+static int32_t a = 0;   /* Wrong */
+```
+> In embedded systems, it is very common that RAM memories are scattered across different memory locations in the system.
+> It quickly becomes tricky to handle all the cases, especially when user declares custom RAM sections.
+> Startup script is in-charge to set default values (.data and .bss) while other custom secions may not be filled with default values, which leads to variables with init value won't have any effect.
+>
+> To be independent of such problem, create init function for each module and use it to set
+> default values for all of your variables, like so:
+
 ```c
 static int32_t a;       /* OK */
-static int32_t b = 4;   /* OK */
-static int32_t a = 0;   /* Wrong */
+static int32_t b = 4;   /* Wrong - this value may not be set at zero 
+                            if linker script&startup files are not properly handled */
 
 void
-my_func(void) {
-    static int32_t* ptr;/* OK */
-    static char abc = 0;/* Wrong */
+my_module_init(void) {
+    a = 0;
+    b = 4;
 }
 ```
 
@@ -1222,6 +1235,14 @@ extern "C" {
 #endif /* TEMPLATE_HDR_H */
 ```
 
+## Clang format integration
+
+Repository comes with always-up-to-date `.clang-format` file, an input configuration
+for `clang-format` tool. It can be seamlessly integrated with most of latest techno
+IDEs, including VSCode. Formatting then happens on the spot on each file save.
+
+https://code.visualstudio.com/docs/cpp/cpp-ide#_code-formatting
+
 ## Artistic style configuration
 
 [AStyle](http://astyle.sourceforge.net/) is a great piece of software that can
@@ -1232,6 +1253,8 @@ This repository contains `astyle-code-format.cfg` file which can be used with `A
 ```
 astyle --options="astyle-code-format.cfg" "input_path/*.c,*.h" "input_path2/*.c,*.h"
 ```
+
+> Artistic style configuration is obsolete and no longer updated
 
 ## Eclipse formatter
 
