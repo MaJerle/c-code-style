@@ -8,6 +8,7 @@ This document describes C code style used by Tilen MAJERLE in his projects and l
   - [Table of Contents](#table-of-contents)
   - [The single most important rule](#the-single-most-important-rule)
   - [Integration with VSCode](#integration-with-vscode)
+  - [Conventions used](#conventions-used)
   - [General rules](#general-rules)
   - [Comments](#comments)
   - [Functions](#functions)
@@ -45,11 +46,16 @@ You can place the folder in the root or your project or even in the root of your
 Some configurations shall be enabled:
 ![VSCode configuration](images/vscode-settings.png) 
 
+## Conventions used
+
+The keywords *MUST*, *MUST NOT*, *REQUIRED*, *SHALL*, *SHALL NOT*, *SHOULD*, *SHOULD NOT*, *RECOMMENDED*, *NOT RECOMMENDED*, *MAY*, and
+   *OPTIONAL* in this document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174]
+
 ## General rules
 
 Here are listed most obvious and important general rules. Please check them carefully before you continue with other chapters.
 
-- Prefer using `clang-format` with formatting file attached to this repository (version `15.x` is minimum)
+- `clang-format` SHOULD be used with formatting file attached to this repository (version `15.x` is a minimum)
 - Use `C11` standard
 - Do not use tabs, use spaces instead
 - Use `4` spaces per indent level
@@ -75,8 +81,9 @@ int32_t a = sum (4, 3);             /* Wrong */
 ```
 
 - Never use `__` or `_` prefix for variables/functions/macros/types. This is reserved for C language itself
-    - Prefer `prv_` name prefix for strictly module-private functions
-- Use only lowercase characters for variables/functions/macros/types with optional underscore `_` char
+    - Prefer `prv_` name prefix for strictly module-private (static) functions
+    - Prefer `libname_int_` or `libnamei_` prefix for library internal functions, that should not be used by the user application while they MUST be used across different library internal modules
+- Use only lowercase characters for variables/functions/types with optional underscore `_` char
 - Opening curly bracket is always at the same line as keyword (`for`, `while`, `do`, `switch`, `if`, ...)
 ```c
 size_t i;
@@ -105,7 +112,7 @@ func_name(5, 4);        /* OK */
 func_name(4,3);         /* Wrong */
 ```
 
-- Do not initialize `global` variables to any default value (or `NULL`), implement it in the dedicated `init` function (if required).
+- Do not initialize `global` variables to any default value (or `NULL`), implement it in the dedicated `init` function (if REQUIRED).
 ```c
 static int32_t a;       /* Wrong */
 static int32_t b = 4;   /* Wrong */
@@ -309,7 +316,7 @@ my_func(const void* const d) {
 
 }
 
-/* Not required, it is advised */
+/* Not REQUIRED, it is advised */
 void
 my_func(const size_t len) {
 
@@ -323,7 +330,7 @@ my_func(void* const d) {
 ```
 
 - When function may accept pointer of any type, always use `void *`, do not use `uint8_t *`
-    - Function must take care of proper casting in implementation
+    - Function MUST take care of proper casting in implementation
 ```c
 /*
  * To send data, function should not modify memory pointed to by `data` variable
@@ -387,7 +394,7 @@ if (is_ok == 0)     /* Wrong, use ! for negative check */
 
 - Always use `/* comment */` for comments, even for *single-line* comment
 - Always include check for `C++` with `extern` keyword in header file
-- Every function must include *doxygen-enabled* comment, even if function is `static`
+- Every function MUST include *doxygen-enabled* comment, even if function is `static`
 - Use English names/text for functions, variables, comments
 - Use *lowercase* characters for variables
 - Use *underscore* if variable contains multiple names, eg. `force_redraw`. Do not use `forceRedraw`
@@ -441,8 +448,8 @@ my_func(void) {
 
 ## Functions
 
-- Every function which may have access from outside its module, must include function *prototype* (or *declaration*)
-- Function name must be lowercase, optionally separated with underscore `_` character
+- Every function which may have access from outside its module, MUST include function *prototype* (or *declaration*)
+- Function name MUST be lowercase, optionally separated with underscore `_` character
 ```c
 /* OK */
 void my_func(void);
@@ -475,7 +482,7 @@ void set(int32_t a);
 const char * get(void);
 ```
 
-- Function implementation must include return type and optional other keywords in separate line
+- Function implementation MUST include return type and optional other keywords in separate line
 ```c
 /* OK */
 int32_t
@@ -559,15 +566,15 @@ char *p, *n;
 
 ## Structures, enumerations, typedefs
 
-- Structure or enumeration name must be lowercase with optional underscore `_` character between words
+- Structure or enumeration name MUST be lowercase with optional underscore `_` character between words
 - Structure or enumeration may contain `typedef` keyword
-- All structure members must be lowercase
-- All enumeration members must be uppercase
-- Structure/enumeration must follow doxygen documentation syntax
+- All structure members MUST be lowercase
+- All enumeration members SHOULD be uppercase
+- Structure/enumeration MUST follow doxygen documentation syntax
 
 When structure is declared, it may use one of `3` different options:
 
-1. When structure is declared with *name only*, it *must not* contain `_t` suffix after its name.
+1. When structure is declared with *name only*, it *MUST not* contain `_t` suffix after its name.
 ```c
 struct struct_name {
     char* a;
@@ -581,19 +588,19 @@ typedef struct {
     char b;
 } struct_name_t;
 ```
-3. When structure is declared with *name and typedef*, it *must not* contain `_t` for basic name and it *has to* contain `_t` suffix after its name for typedef part.
+3. When structure is declared with *name and typedef*, it *MUST NOT* contain `_t` for basic name and it *MUST* contain `_t` suffix after its name for typedef part.
 ```c
-typedef struct struct_name {
+typedef struct struct_name {    /* No _t */
     char* a;
     char b;
     char c;
-} struct_name_t;
+} struct_name_t;    /* _t */
 ```
 
 Examples of bad declarations and their suggested corrections
 ```c
-/* a and b must be separated to 2 lines */
-/* Name of structure with typedef must include _t suffix */
+/* a and b MUST be separated to 2 lines */
+/* Name of structure with typedef MUST include _t suffix */
 typedef struct {
     int32_t a, b;
 } a;
@@ -604,13 +611,13 @@ typedef struct {
     int32_t b;
 } a_t;
 
-/* Wrong name, it must not include _t suffix */
+/* Wrong name, it MUST not include _t suffix */
 struct name_t {
     int32_t a;
     int32_t b;
 };
 
-/* Wrong parameters, must be all uppercase */
+/* Wrong parameters, MUST be all uppercase */
 typedef enum {
     MY_ENUM_TESTA,
     my_enum_testb,
@@ -638,8 +645,8 @@ typedef uint8_t (*my_func_typedef_fn)(uint8_t p1, const char* p2);
 
 ## Compound statements
 
-- Every compound statement must include opening and closing curly bracket, even if it includes only `1` nested statement
-- Every compound statement must include single indent; when nesting statements, include `1` indent size for each nest
+- Every compound statement MUST include opening and closing curly bracket, even if it includes only `1` nested statement
+- Every compound statement MUST include single indent; when nesting statements, include `1` indent size for each nest
 ```c
 /* OK */
 if (c) {
@@ -659,7 +666,7 @@ if (c) do_a();
 else do_b();
 ```
 
-- In case of `if` or `if-else-if` statement, `else` must be in the same line as closing bracket of first statement
+- In case of `if` or `if-else-if` statement, `else` MUST be in the same line as closing bracket of first statement
 ```c
 /* OK */
 if (a) {
@@ -688,7 +695,7 @@ else
 }
 ```
 
-- In case of `do-while` statement, `while` part must be in the same line as closing bracket of `do` part
+- In case of `do-while` statement, `while` part MUST be in the same line as closing bracket of `do` part
 ```c
 /* OK */
 do {
@@ -710,7 +717,7 @@ do {
 while (check());
 ```
 
-- Indentation is required for every opening bracket
+- Indentation is REQUIRED for every opening bracket
 ```c
 if (a) {
     do_a();
@@ -722,7 +729,7 @@ if (a) {
 }
 ```
 
-- Never do compound statement without curly bracket, even in case of single statement. Examples below show bad practices
+- Compound statement MUST include curly brackets, even in the case of a single statement. Examples below show bad practices
 ```c
 if (a) do_b();
 else do_c();
@@ -730,7 +737,7 @@ else do_c();
 if (a) do_a(); else do_b();
 ```
 
-- Empty `while`, `do-while` or `for` loops must include brackets
+- Empty `while`, `do-while` or `for` loops MUST include brackets
 ```c
 /* OK */
 while (is_register_bit_set()) {}
@@ -781,10 +788,28 @@ for (size_t a = 0; a < 10; ) {
 }
 ```
 
+- Inline `if` statement MAY be used only for assignment or function call operations
+```c
+/* OK */
+int a = condition ? if_yes : if_no; /* Assignment */
+func_call(condition ? if_yes : if_no); /* Function call */
+switch (condition ? if_yes : if_no) {...}   /* OK */
+
+/* Wrong, this code is not well maintenable */
+condition ? call_to_function_a() : call_to_function_b();
+
+/* Rework to have better program flow */
+if (condition) {
+    call_to_function_a();
+} else {
+    call_to_function_b();
+}
+```
+
 ### Switch statement
 
 - Add *single indent* for every `case` statement
-- Use additional *single indent* for `break` statement in each `case` or `default`
+- Use additional *single indent* for `break` statement in each `case` or `default` statement
 ```c
 /* OK, every case has single indent */
 /* OK, every break has additional indent */
@@ -815,7 +840,7 @@ default:
 switch (check()) {
     case 0:
         do_a();
-    break;      /* Wrong, break must have indent as it is under case */
+    break;      /* Wrong, break MUST have indent as it is under case */
     case 1:
     do_b();     /* Wrong, indent under case is missing */
     break;
@@ -843,7 +868,7 @@ switch (var) {
 }
 ```
 
-- If local variables are required, use curly brackets and put `break` statement inside.
+- If local variables are REQUIRED, use curly brackets and put `break` statement inside.
     - Put opening curly bracket in the same line as `case` statement
 ```c
 switch (a) {
@@ -874,10 +899,10 @@ switch (a) {
 ## Macros and preprocessor directives
 
 - Always use macros instead of literal constants, specially for numbers
-- All macros must be fully uppercase, with optional underscore `_` character, except if they are clearly marked as function which may be in the future replaced with regular function syntax
+- All macros MUST be fully uppercase, with optional underscore `_` character, except if they are clearly marked as function which may be in the future replaced with regular function syntax
 ```c
 /* OK */
-#define MY_MACRO(x)         ((x) * (x))
+#define SQUARE(x)         ((x) * (x))
 
 /* Wrong */
 #define square(x)           ((x) * (x))
@@ -907,7 +932,7 @@ int32_t x = 5 * (3) + (4);  /* It is evaluated to this, final result = 19 which 
 #define SUM(x, y)           ((x) + (y))
 ```
 
-- When macro uses multiple statements, protect it using `do-while (0)` statement
+- When macro uses multiple statements, protect these using `do {} while (0)` statement
 ```c
 typedef struct {
     int32_t px, py;
@@ -946,7 +971,7 @@ if (a)
         (&p)->py = (6);
 
 /*
- * Ask yourself a question: To which `if` statement `else` keyword belongs?
+ * Ask yourself a question: To which `if` statement does the `else` keyword belong?
  *
  * Based on first part of code, answer is straight-forward. To inner `if` statement when we check `b` condition
  * Actual answer: Compilation error as `else` belongs nowhere
@@ -1026,7 +1051,7 @@ if (a) {                    /* If a is true */
 
 ## Documentation
 
-Documented code allows doxygen to parse and general html/pdf/latex output, thus it is very important to do it properly.
+Documented code allows doxygen to parse and generate html/pdf/latex output, thus it is very important to do it properly at an early stage of the project.
 
 - Use doxygen-enabled documentation style for `variables`, `functions` and `structures/enumerations`
 - Always use `\` for doxygen, do not use `@`
@@ -1040,7 +1065,7 @@ static
 type_t* list;
 ```
 
-- Every structure/enumeration member must include documentation
+- Every structure/enumeration member MUST include documentation
 - Use `12x4 spaces` offset for beginning of comment
 ```c
 /**
@@ -1067,10 +1092,10 @@ typedef enum {
 } point_color_t;
 ```
 
-- Documentation for functions must be written in function implementation (source file usually)
-- Function must include `brief` and all parameters documentation
-- Every parameter must be noted if it is `in` or `out` for *input* and *output* respectively
-- Function must include `return` parameter if it returns something. This does not apply for `void` functions
+- Documentation for functions MUST be written in function implementation (source file usually)
+- Function MUST include `brief` and all parameters documentation
+- Every parameter MUST be noted if it is `in` or `out` for *input* and *output* respectively
+- Function MUST include `return` parameter if it returns something. This does not apply for `void` functions
 - Function can include other doxygen keywords, such as `note` or `warning`
 - Use colon `:` between parameter name and its description
 ```c
@@ -1131,7 +1156,7 @@ get_data(const void* in) {
 }
 ```
 
-- Documentation for macros must include `hideinitializer` doxygen command
+- Documentation for macros MUST include `hideinitializer` doxygen command
 ```c
 /**
  * \brief           Get minimal value between `x` and `y`
@@ -1146,7 +1171,7 @@ get_data(const void* in) {
 ## Header/source files
 
 - Leave single empty line at the end of file
-- Every file must include doxygen annotation for `file` and `brief` description followed by empty line (when using doxygen)
+- Every file MUST include doxygen annotation for `file` and `brief` description followed by empty line (when using doxygen)
 ```c
 /**
  * \file            template.h
@@ -1155,7 +1180,7 @@ get_data(const void* in) {
                     /* Here is empty line */
 ```
 
-- Every file (*header* or *source*) must include license (opening comment includes single asterisk as this must be ignored by doxygen)
+- Every file (*header* or *source*) MUST include license (opening comment includes single asterisk as this MUST be ignored by doxygen)
 - Use the same license as already used by project/library
 ```c
 /**
@@ -1192,12 +1217,12 @@ get_data(const void* in) {
  */
 ```
 
-- Header file must include guard `#ifndef`
-- Header file must include `C++` check
+- Header file MUST include guard `#ifndef`
+- Header file MUST include `C++` check
 - Include external header files outside `C++` check
 - Include external header files with STL C files first followed by application custom files
-- Header file must include only every other header file in order to compile correctly, but not more (.c should include the rest if required)
-- Header file must only expose module public variables/types/functions
+- Header file MUST include only every other header file in order to compile correctly, but not more (.c should include the rest if REQUIRED)
+- Header file MUST only expose module public variables/types/functions
 - Use `extern` for global module variables in header file, define them in source file later
 ```
 /* file.h ... */
