@@ -120,7 +120,7 @@ static int32_t a = 0;   /* Wrong */
 ```
 > In embedded systems, it is very common that RAM memories are scattered across different memory locations in the system.
 > It quickly becomes tricky to handle all the cases, especially when user declares custom RAM sections.
-> Startup script is in-charge to set default values (.data and .bss) while other custom secions may not be filled with default values, which leads to variables with init value won't have any effect.
+> Startup script is in-charge to set default values (.data and .bss) while other custom sections may not be filled with default values, which leads to variables with init value won't have any effect.
 >
 > To be independent of such problem, create init function for each module and use it to set
 > default values for all of your variables, like so:
@@ -898,7 +898,7 @@ switch (a) {
 
 ## Macros and preprocessor directives
 
-- Always use macros instead of literal constants, specially for numbers
+- Always use macros instead of literal constants, especially for numbers
 - All macros MUST be fully uppercase, with optional underscore `_` character, except if they are clearly marked as function which may be in the future replaced with regular function syntax
 ```c
 /* OK */
