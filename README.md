@@ -751,8 +751,8 @@ while (is_register_bit_set()) {
 
 - If `while` (or `for`, `do-while`, etc) is empty (it can be the case in embedded programming), use empty single-line brackets
 ```c
-/* Wait for bit to be set in embedded hardware unit
-uint32_t* addr = HW_PERIPH_REGISTER_ADDR;
+/* Wait for bit to be set in embedded hardware unit */
+volatile uint32_t* addr = HW_PERIPH_REGISTER_ADDR;
 
 /* Wait bit 13 to be ready */
 while (*addr & (1 << 13)) {}        /* OK, empty loop contains no spaces inside curly brackets */
