@@ -1066,7 +1066,7 @@ type_t* list;
 ```
 
 - Every structure/enumeration member MUST include documentation
-- Use `12x4 spaces` offset for beginning of comment
+- Align start of comments between different structure members to the same column
 ```c
 /**
  * \brief           This is point struct
@@ -1085,8 +1085,7 @@ typedef struct {
  * \brief           Point color enumeration
  */
 typedef enum {
-    COLOR_RED,                                  /*!< Red color. This comment has 12x4
-                                                    spaces offset from beginning of line */
+    COLOR_RED,                                  /*!< Red color */
     COLOR_GREEN,                                /*!< Green color */
     COLOR_BLUE,                                 /*!< Blue color */
 } point_color_t;
