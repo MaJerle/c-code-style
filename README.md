@@ -288,13 +288,13 @@ if (ptr || !ptr) {
 }
 ```
 
-- Always use *pre-increment (and decrement respectively)* instead of *post-increment (and decrement respectively)*
+- Prefer the use of *pre-increment (and decrement respectively)* instead of *post-increment (and decrement respectively)* whenever possible
 ```c
 int32_t a = 0;
 ...
 
-a++;            /* Wrong */
-++a;            /* OK */
+a++;            /*  */
+++a;            /* Preferred */
 
 for (size_t j = 0; j < 10; ++j) {}  /* OK */
 ```
